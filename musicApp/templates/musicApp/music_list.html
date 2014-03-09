@@ -1,0 +1,14 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'musicApp/style.css' %}">
+{% if music_list %}
+    <ul>
+    {% for music in music_list %}
+    <li><a href="{% url 'musicApp:music-detail' music.id %}">{{ music.musicName }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No musics are available.</p>
+{% endif %}
+
+<a href="{% url 'musicApp:music-home' %}">music home!</a>

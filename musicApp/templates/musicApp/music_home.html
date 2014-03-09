@@ -1,0 +1,35 @@
+
+{% load staticfiles %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="{% static 'musicApp/plugin/musicplayer/plugin/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'musicApp/plugin/musicplayer/demo/css/demo.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'musicApp/css/musicApp.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'musicApp/css/bootstrap.css' %}" media="screen">
+    <!-- <script type="text/javascript" src="{% static 'musicApp/js/jquery-1.10.2.min.js' %}"></script> -->
+    <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/demo/js/jquery-1.6.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/plugin/jquery-jplayer/jquery.jplayer.js' %}"></script>
+    <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/plugin/ttw-music-player-min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'musicApp/musicAppJs/musicList.js' %}"></script>
+
+    <div id="logo"> </div>
+
+</head>
+
+<body>
+    
+    <div id="title"></div>
+    <div id='content'>
+        <input type='hidden' id='myPlaylist_input' value='{{myPlaylist2}}'/>
+        <div id='left-content' class='col-md7'></div>
+        <div id='right-content' class='col-md5'></div>
+    </div>
+    <div>
+        <a href="{% url 'musicApp:music-admin' %}">admin download</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,227 @@
+
+{% load staticfiles %}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html lang='zh-cn'>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'musicApp/plugin/musicplayer/plugin/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'musicApp/plugin/musicplayer/demo/css/demo.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'musicApp/css/musicApp.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'musicApp/css/bootstrap.css' %}" media="screen">
+    <link rel="stylesheet" type="text/css" href="{% static 'musicApp/css/carousel.css' %}">
+<!--     <link rel="stylesheet" type="text/css" href="{% static 'musicApp/css/slidebar.min.css' %}"> -->
+    <!-- <script type="text/javascript" src="{% static 'musicApp/js/jquery-1.10.2.min.js' %}"></script> -->
+
+    <!-- Add bootstrap lib -->
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="{% static 'musicApp/common/dist/css/bootstrap.min.css' %}">
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="{% static 'musicApp/common/dist/css/bootstrap-theme.min.css' %}">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="{% static 'musicApp/common/dist/js/jquery.min.js' %}"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="{% static 'musicApp/common/dist/js/bootstrap.min.js' %}"></script>
+    <!-- END:Add bootstrap lib -->
+
+    <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/demo/js/jquery-1.6.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/plugin/jquery-jplayer/jquery.jplayer.js' %}"></script>
+    <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/plugin/ttw-music-player-min.js' %}"></script>
+
+
+
+</head>
+
+<body data-spy="scroll" data-target="#affix-nav" position="relative">
+    <!-- load music list -->
+    <div id='content'>
+        <input type='hidden' id='myPlaylist_input' value='{{myPlaylist2}}'/>
+    </div>
+    <!-- navbar -->
+    <div class="navbar-wrapper">
+        <div class="container">
+            <div class="navbar navbar-default navbar-static-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"> WELCOME </a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Love</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">About</a></li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">Nav header</li>
+                                    <li><a href="#">Contact</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- logo -->
+    <div id='user_home_logo'>
+        <div id='logo'></div>
+    </div>
+
+    <!-- channel list panel -->
+    <div class="container">
+        <div class="row">
+            <!-- affix-nav -->
+            <div id="affix-nav" class="sidebar col-md-4 col-sm-4 hidden-xs">
+                <ul class="nav sidenav" data-spy="affix" data-offset-top="290" data-offset-bottom="450">
+                    <li class="active" ><a href="#cupcake">Moon MHz</a>
+                    </li>
+                    <li>
+                        <a href="#love_music_type1">
+                            <div class="cover-wrap">                
+                                <div class="cover-mask">
+                                 </div>                 
+                                <img class="cover" src="http://img3.douban.com/img/fmadmin/icon/26375.jpg">             
+                            </div>             
+                            <div>                 
+                                <h4>轻音乐MHz</h4>                 
+                            </div>  
+                        </a>                   
+                    </li>
+                    <li>
+                        <a href="#veggi">
+                            <div class="cover-wrap">                
+                                <div class="cover-mask">
+                                 </div>                 
+                                <img class="cover" src="http://img3.douban.com/img/fmadmin/icon/26391.jpg">             
+                            </div>             
+                            <div>                 
+                                <h4>咖啡MHz</h4>                 
+                            </div>  
+                        </a>                   
+                    </li>
+                    <li>
+                        <a href="#veggi">
+                            <div class="cover-wrap">                
+                                <div class="cover-mask">
+                                 </div>                 
+                                <img class="cover" src="http://img3.douban.com/img/fmadmin/icon/27675.jpg">             
+                            </div>             
+                            <div>                 
+                                <h4>小清新MHz</h4>                 
+                            </div>  
+                        </a>                   
+                    </li>
+                    <li>
+                        <a href="#veggi">
+                            <div class="cover-wrap">                
+                                <div class="cover-mask">
+                                 </div>                 
+                                <img class="cover" src="http://img3.douban.com/img/fmadmin/icon/20653.jpg">             
+                            </div>             
+                            <div>                 
+                                <h4>轻音乐MHz</h4>                 
+                            </div>  
+                        </a>                   
+                    </li>
+
+                    <li><a href="#veggi">Veggie Lorem Ipsum</a>
+                        <ul class="nav">   
+                            <li><a href="#coriander">Coriander</a></li>
+                            <li><a href="#kohlrabi">Kohlrabi</a></li>
+                            <li><a href="#amaranth">Amaranth</a></li>
+                            <li><a href="#soybean">Soybean</a></li>        
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- content -->
+            <section id="content" class="col-md-8 col-sm-8 col-xs-12">
+                <article id="cupcake">
+                    <h2><a href="http://www.cupcakeipsum.com/#" target="_blank">Cupcake Lorem Ipsum</a></h2>
+                    <p>Coriander daikon summer purslane asparagus cress gourd scallion garbanzo bush tomato peanut broccoli celery. Artichoke cress wakame lotus root chicory kakadu plum. Garlic sierra leone bologi taro beetroot lettuce salad endive mustard catsear avocado shallot chickpea water chestnut tatsoi mung bean. Carrot prairie turnip fennel bok choy fava bean corn rutabaga radicchio earthnut pea burdock swiss chard water spinach dandelion soko. Brussels sprout coriander bitterleaf grape melon burdock chicory daikon water spinach corn..</p>
+                    
+                    <section id="sweetjelly">
+                        <h3>Sweet jelly</h3>
+                        <p>Coriander daikon summer purslane asparagus cress gourd scallion garbanzo bush tomato peanut broccoli celery. Artichoke cress wakame lotus root chicory kakadu plum. Garlic sierra leone bologi taro beetroot lettuce salad endive mustard catsear avocado shallot chickpea water chestnut tatsoi mung bean. Carrot prairie turnip fennel bok choy fava bean corn rutabaga radicchio earthnut pea burdock swiss chard water spinach dandelion soko. Brussels sprout coriander bitterleaf grape melon burdock chicory daikon water spinach corn.Coriander daikon summer purslane asparagus cress gourd scallion garbanzo bush tomato peanut broccoli celery. Artichoke cress wakame lotus root chicory kakadu plum. Garlic sierra leone bologi taro beetroot lettuce salad endive mustard catsear avocado shallot chickpea water chestnut tatsoi mung bean. Carrot prairie turnip fennel bok choy fava bean corn rutabaga radicchio earthnut pea burdock swiss chard water spinach dandelion soko. Brussels sprout coriander bitterleaf grape melon burdock chicory daikon water spinach corn..</p>
+                    </section>
+                    <section id="tiramisu">
+                        <h3>Tiramisu</h3>
+                        <p>Coriander daikon summer purslane asparagus cress gourd scallion garbanzo bush tomato peanut broccoli celery. Artichoke cress wakame lotus root chicory kakadu plum. Garlic sierra leone bologi taro beetroot lettuce salad endive mustard catsear avocado shallot chickpea water chestnut tatsoi mung bean. Carrot prairie turnip fennel bok choy fava bean corn rutabaga radicchio earthnut pea burdock swiss chard water spinach dandelion soko. Brussels sprout coriander bitterleaf grape melon burdock chicory daikon water spinach corn..Coriander daikon summer purslane asparagus cress gourd scallion garbanzo bush tomato peanut broccoli celery. Artichoke cress wakame lotus root chicory kakadu plum. Garlic sierra leone bologi taro beetroot lettuce salad endive mustard catsear avocado shallot chickpea water chestnut tatsoi mung bean. Carrot prairie turnip fennel bok choy fava bean corn rutabaga radicchio earthnut pea burdock swiss chard water spinach dandelion soko. Brussels sprout coriander bitterleaf grape melon burdock chicory daikon water spinach corn.</p>
+                    </section>
+                    <section id="love_music_type1">
+                        <h3>轻音乐.MHz</h3>
+                        <p>在属于你的放松地带，释放心灵</p>
+
+                    </section>
+                </article>
+                <br />
+                <article id="veggi">
+                    <h2><a href="http://veggieipsum.com/" target="_blank">Veggie Lorem Ipsum</a></h2>
+                    <section id="coriander">
+                        <h3>Sweet jelly</h3>
+                        <p>Coriander daikon summer purslane asparagus cress gourd scallion garbanzo bush tomato peanut broccoli celery. Artichoke cress wakame lotus root chicory kakadu plum. Garlic sierra leone bologi taro beetroot lettuce salad endive mustard catsear avocado shallot chickpea water chestnut tatsoi mung bean. Carrot prairie turnip fennel bok choy fava bean corn rutabaga radicchio earthnut pea burdock swiss chard water spinach dandelion soko. Brussels sprout coriander bitterleaf grape melon burdock chicory daikon water spinach corn.Coriander daikon summer purslane asparagus cress gourd scallion garbanzo bush tomato peanut broccoli celery. Artichoke cress wakame lotus root chicory kakadu plum. Garlic sierra leone bologi taro beetroot lettuce salad endive mustard catsear avocado shallot chickpea water chestnut tatsoi mung bean. Carrot prairie turnip fennel bok choy fava bean corn rutabaga radicchio earthnut pea burdock swiss chard water spinach dandelion soko. Brussels sprout coriander bitterleaf grape melon burdock chicory daikon water spinach corn..</p>
+                    </section>
+                    <section id="kohlrabi">
+                        <h2><a href="#">轻音乐.MHz</a></h2>
+                        <p>在属于你的放松地带，释放心灵</p>
+                        <ul>
+                        {% if type1UserMusicList %}
+                            {% for music in type1UserMusicList%}
+                            <li>
+                                <div class="cover-wrap">                
+                                    <div class="cover-mask">
+                                     </div>                 
+                                    <img class="cover" src="http://img3.douban.com/img/fmadmin/icon/20653.jpg">             
+                                </div>             
+                                <div>                 
+                                    <h4>{{music.musicName}}</h4> 
+                                    <p>{{music.musicDescribe}}</p>                
+                                </div>  
+                            </li>
+                            {% endfor %}
+                        {% endif%}
+                        </ul>
+                    </section>
+                    <section id="amaranth">
+                        <h3>Sweet jelly</h3>
+                        <ul>
+                        {% if type2UserMusicList %}
+                            {% for music in type2UserMusicList%}
+                            <li>
+                                <div class="cover-wrap">                
+                                    <div class="cover-mask">
+                                     </div>                 
+                                    <img class="cover" src="http://img3.douban.com/img/fmadmin/icon/20653.jpg">             
+                                </div>             
+                                <div>                 
+                                    <h4>{{music.musicName}}</h4> 
+                                    <p>{{music.musicDescribe}}</p>                
+                                </div>  
+                            </li>
+                            {% endfor %}
+                        {% endif %}
+                        </ul>
+                    </section>
+
+                </article>
+            </section>  
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+body{
+	font: 12px/1.6 arial,helvetica,sans-serif;
+}
+
+@font-face{
+	font-family: "Bitstream Vera Serif Bold";
+	src: url("http://developer.mozilla.org/@api/deki/files/2934/=VeraSeBd.ttf");
+}
+
+#logo{
+	display: block;
+	/*margin: 62px 0 0 165px;*/
+	height: 64px;
+	width: 135px;
+	overflow: hidden;
+	color: transparent;
+	line-height: 100em;
+	background: no-repeat 0 0;
+	background-image: url('../images/logo.png');
+}
+
+#user_home_logo{
+	margin: 80px 100px 0 80px;
+}
+
+#user_home_navbar_brand{
+	font-family: "Bitstream Vera Serif Bold", serif;
+}
+
+/* bootstrap afix style*/
+ul.affix {
+    /*position: fixed; */
+    top: 0px;
+    left: 62px;
+    width: 360px;
+}
+ul.affix-top {
+    /*position: fixed;*/
+    top: 0px;
+    left: 62px;
+    width: 360px;
+}
+ul.affix-bottom {
+/*    position: relative;
+    top: 60px;
+    left: 62px;
+    width: 360px;*/
+    /*position: absolute;*/
+	position: absolute;
+	top: auto;
+	bottom: 126px;
+}
+ 
+/* First level of nav */
+.sidenav {
+	margin-top: 20px;
+	margin-bottom: 30px;
+	padding-top:    10px;
+	padding-bottom: 10px;
+	background-color: #f7f5fa;
+	border-radius: 5px;
+}
+ 
+/* All levels of nav */
+.sidebar .nav > li > a {
+	display: block;
+	color: #716b7a;
+	padding: 5px 20px;
+}
+.sidebar .nav > li > a:hover,
+.sidebar .nav > li > a:focus {
+	text-decoration: none;
+	background-color: #e5e3e9;
+}
+.sidebar .nav > .active > a,
+.sidebar .nav > .active:hover > a,
+.sidebar .nav > .active:focus > a {
+	font-weight: bold;
+	color: #563d7c;
+	background-color: transparent;
+}
+ 
+/* Nav: second level */
+.sidebar .nav .nav {
+    display: none;
+}
+.sidebar .nav > li.active .nav {
+    display:block;
+}
+.sidebar .nav .nav {
+ 	margin-bottom: 8px;
+}
+.sidebar .nav .nav > li > a {
+	padding-top:    3px;
+	padding-bottom: 3px;
+	padding-left: 30px;
+	font-size: 90%;
+}
+#content {
+    margin-top:20px;
+}
+/*end*/
+
+.cover-wrap {
+	position: relative;
+	float: left;
+	width: 45px;
+	height: 45px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.cover-mask{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 45px;
+	height: 45px;
+	background: center center no-repeat;
+	background-image: url('http://img3.douban.com/f/fm/6f2d282b3d515296a5ea2a60eccae0ba2d97ca89/pics/fm/home/covermask.png');
+}
+
+.cover{
+	height:45px;
+	width:45px
+}
+

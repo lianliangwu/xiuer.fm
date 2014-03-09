@@ -1,0 +1,17 @@
+<h1>{{ music.musicName }}</h1>
+<ul>
+	<li><a href='{{ music.musicUrl }}'>{{ music.musicName }}</a></li>
+</ul>
+
+{% if error_message %}
+	<p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
+<form action = '{% url 'musicApp:love' music.pk %}' method = 'post'>
+{% csrf_token %}
+	<img src="http://img5.douban.com/mpic/s3951858.jpg"/>
+
+	<label type='hide' name='loveChoose'></label>
+
+	<input type='submit' value='i love this music'/>
+</form>

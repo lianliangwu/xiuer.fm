@@ -1,0 +1,9 @@
+{% if userlovemusic_list %}
+    <ul>
+    {% for love_music in userlovemusic_list %}
+    <li><a href="{% url 'musicApp:music-detail' love_music.musicId %}">{{ love_music.musicId }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No musics are available.</p>
+{% endif %}
