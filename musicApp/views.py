@@ -54,10 +54,17 @@ def love(request,music_id):
 def unlove(request,music_id):
 	try:
 		user_id = request.user.id
-		UserLoveMusic.objects.filter(userId = user_id,musicId = int(music_id)).delete()
+		if user_id is not None:
+			UserLoveMusic.objects.filter(userId = user_id,musicId = int(music_id)).delete()
+			return HttpResponseRedirect(reverse('musicApp:music-userHome',args=(user_id,)))
+		else :
+			myPlaylist = getMyPlayList()
+			return render(request,'musicApp/music_home.html',{
+				'myPlaylist2': myPlaylist, 
+				'error_message':'请重新登录 xiuer.FM'
+			})
 	except (KeyError,UserLoveMusic.DoesNotExist):
 		return render(request,'musicApp/error.html')
-	return HttpResponseRedirect(reverse('musicApp:music-userHome',args=(user_id,)))
 
 # def downloadMusic view
 def downloadMusic(request,music_id):

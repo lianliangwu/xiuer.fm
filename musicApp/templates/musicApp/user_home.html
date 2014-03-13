@@ -44,7 +44,7 @@
         <input type='hidden' id='myPlaylist_input' value='{{myPlaylist2}}'/>
     </div>
     <!-- navbar -->
-    <div class="navbar-wrapper">
+<!--     <div class="navbar-wrapper">
         <div class="container">
             <div class="navbar navbar-default navbar-static-top" role="navigation">
                 <div class="container">
@@ -74,12 +74,11 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- logo -->
-<!--     <div id='user_home_logo'>
-        <div id='logo'></div>
     </div> -->
+
+    <div id="logo-div-userhome">
+        <img class="img-circle" src="{% static 'musicApp/images/logo.png' %}">
+    </div>
 
     <!-- channel list panel -->
     <div class="container">
@@ -88,7 +87,7 @@
             <div id="affix-nav" class="bs-docs-sidebar col-md-4 col-sm-4 hidden-xs">
                 <ul class="nav sidenav" data-spy="affix" data-offset-top="290" data-offset-bottom="450">
                     <!-- Moon MHZ -->
-                    <li class="active" ><a href="#">Moon MHz</a></li>
+                    <li class="active" ><a href="#"><div class='userhome-font'>月亮 MHz</div></a></li>
                     <li>
                         <a href="#love_channel" style="color=rgba(138, 148, 156, 0.91)">
                             <div class="cover-wrap">                
@@ -111,7 +110,7 @@
                     </li>
 
                     <!-- Xiuer MHZ -->
-                    <li ><a href="#">xiuer MHz</a>
+                    <li ><a href="#" ><div class='userhome-font'>秀儿 MHz</div></a>
                     </li>
                     <li>
                         <a href="#" style="color=rgba(138, 148, 156, 0.91)">
@@ -134,7 +133,7 @@
                         </a>                   
                     </li>
                     <!-- Liang MHZ -->
-                    <li ><a href="#">liangliang MHz</a>
+                    <li ><a href="#"><div class='userhome-font'>亮亮 MHz</div></a>
                     </li>
                     <li>
                         <a href="#" style="color=rgba(138, 148, 156, 0.91)">

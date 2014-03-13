@@ -34,19 +34,19 @@ body{
 /* bootstrap afix style*/
 ul.affix {
 	position: fixed;
-	top: 90px;
+	top: 68px;
 	left: 142px;
 	width: 360px
 }
 ul.affix-top {
 	position: fixed;
-	top: 90px;
+	top: 68px;
 	left: 142px;
 	width: 360px
 }
 ul.affix-bottom {
 	position: fixed;
-	top: 90px;
+	top: 68px;
 	left: 142px;
 	width: 360px
 }
@@ -142,6 +142,13 @@ ul.affix-bottom {
 	padding: 8px 17px;
 }
 
+#logo-div-userhome {
+	position: fixed;
+	z-index: 50;
+	margin-left: 950px;
+	margin-top: 65px;
+}
+
 .bs-docs-sidebar .nav>li>a:hover,.bs-docs-sidebar .nav>li>a:focus
 {
 	background-color: transparent;
@@ -210,4 +217,13 @@ ul.affix-bottom {
 	height: 16px;
 	margin-top: -15px;
 	margin-left: 160px;
+}
+
+.userhome-font {
+	margin-left: 39px;
+	color: gray;
+	font-size: 16px;
+	font-family: initial;
+	margin-top: 30px;
+	margin-bottom: -5px;
 }
