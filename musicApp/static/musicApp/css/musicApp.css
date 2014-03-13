@@ -192,3 +192,22 @@ ul.affix-bottom {
 	margin-top: -15px;
 	margin-left: 160px;
 }
+
+.unlove-icon {
+	display: block;
+	background: url('../images/love_icon.png') no-repeat -14px -91px;
+	width: 16px;
+	height: 16px;
+	margin-top: -15px;
+	margin-left: 160px;
+}
+
+.unlove-icon:hover {
+	/*background: transparent url('../images/love_icon.png') no-repeat;*/
+	display: block;
+	background: url('../images/love_icon.png') no-repeat -14px -63px;
+	width: 16px;
+	height: 16px;
+	margin-top: -15px;
+	margin-left: 160px;
+}

@@ -41,12 +41,20 @@ class LoveMusicView(generic.ListView):
 
 # def argument view3
 def love(request,music_id):
+	user_id = request.user.id
+	logging.debug(user_id)
 	try:
-		user_id = request.session['user_id']
-		logging.debug("WILL"+user_id)
-		
-		love = UserLoveMusic(userId = user_id,musicId = int(music_id))
-		love.save()
+		love = UserLoveMusic.objects.get(userId = user_id,musicId = int(music_id))
+	except(UserLoveMusic.DoesNotExist):
+		love2 = UserLoveMusic(userId = user_id,musicId = int(music_id))
+		love2.save()
+	return HttpResponseRedirect(reverse('musicApp:music-userHome',args=(user_id,)))
+
+# def argument view3
+def unlove(request,music_id):
+	try:
+		user_id = request.user.id
+		UserLoveMusic.objects.filter(userId = user_id,musicId = int(music_id)).delete()
 	except (KeyError,UserLoveMusic.DoesNotExist):
 		return render(request,'musicApp/error.html')
 	return HttpResponseRedirect(reverse('musicApp:music-userHome',args=(user_id,)))

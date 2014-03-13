@@ -88,7 +88,16 @@
             <div id="affix-nav" class="bs-docs-sidebar col-md-4 col-sm-4 hidden-xs">
                 <ul class="nav sidenav" data-spy="affix" data-offset-top="290" data-offset-bottom="450">
                     <!-- Moon MHZ -->
-                    <li class="active" ><a href="#">Moon MHz</a>
+                    <li class="active" ><a href="#">Moon MHz</a></li>
+                    <li>
+                        <a href="#love_channel" style="color=rgba(138, 148, 156, 0.91)">
+                            <div class="cover-wrap">                
+                                <img class="cover img-circle" src="http://img3.douban.com/img/fmadmin/icon/27675.jpg">      
+                            </div>             
+                            <div>                 
+                                <div class="slide-lable">红心MHz</div>              
+                            </div>  
+                        </a>                   
                     </li>
                     <li>
                         <a href="#random_channel" style="color=rgba(138, 148, 156, 0.91)">
@@ -100,16 +109,7 @@
                             </div>  
                         </a>                   
                     </li>
-                    <li>
-                        <a href="#love_channel" style="color=rgba(138, 148, 156, 0.91)">
-                            <div class="cover-wrap">                
-                                <img class="cover img-circle" src="http://img3.douban.com/img/fmadmin/icon/27675.jpg">      
-                            </div>             
-                            <div>                 
-                                <div class="slide-lable">红心MHz</div>              
-                            </div>  
-                        </a>                   
-                    </li>
+
                     <!-- Xiuer MHZ -->
                     <li ><a href="#">xiuer MHz</a>
                     </li>
@@ -161,12 +161,43 @@
             </div>
             <!-- content -->
             <section id="content" class="col-md-8 col-sm-8 col-xs-12">
+                <article id="love_channel">
+                    <h2><a href="#" target=""></a></h2>
+                    <section id="">
+                        <section id="">
+                            <h3 style="margin-left: 39px;color: gray;">红心.MHz</h3>
+                            <p style="margin-left: 39px;color: gray;">在属于你的放松地带，释放心灵</p>
+                            <ul>
+                            {% if UserMusicList_C1 %}
+                                {% for music in UserMusicList_C1%}
+                                <li style="height:130px">
+                                    <div class="cover-wrap" style="width: 125px;height: 125px;">                         
+                                        <img class="img-thumbnail" src="{{ music.musicPicUrl }}">             
+                                    </div>             
+                                    <div>
+                                        <ul>
+                                            <div class="userhome-music-li">{{music.musicName}}</div>
+                                            <div class="userhome-music-li">歌手 {{music.musicArtist}}</div>
+                                            <div class="userhome-music-li">专辑 {{music.musicAlbumtitle}}</div>
+                                            <div class="userhome-music-li">发行时间 {{music.musicPubTime}}</div>
+                                            <a href="{% url 'musicApp:music-oneMusicHome' music.id %}" target='_blank' style="color: rgba(34, 81,231, 0.69);font-size: 13px; margin-left: 25px">试听</a> 
+                                            <a href="{% url 'musicApp:music-unlove' music.id %}"><div class="unlove-icon"></div></a>
+                                        </ul>                 
+                                    </div>  
+                                </li>
+                                {% endfor %}
+                            {% endif %}
+                            </ul>
+                        </section>
+                    </section>
+                </article>
+                <br />
                 <article id="random_channel">
                     <h2><a href="#" target=""></a></h2>
                     <section id="">
                         <section id="">
                             <h3 style="margin-left: 39px;color: gray;">随心.MHz</h3>
-                            <p style="margin-left: 39px;color: gray;">在属于你的放松地带，释放心灵</p>
+                            <p style="margin-left: 39px;color: gray;">在偶遇的音乐世界里，慢慢寻找属于你的那首歌</p>
                             <ul>
                             {% if UserMusicList_C0 %}
                                 {% for music in UserMusicList_C0%}
@@ -189,31 +220,6 @@
                             {% endif %}
                             </ul>
                         </section>
-                    </section>
-                </article>
-                <br />
-                <article id="love_channel">
-                    <h2><a href="#" target=""></a></h2>
-                    <section id="">
-                        <h3 style="margin-left: 39px;color: gray;">红心.MHz</h2>
-                        <p style="margin-left: 39px;color: gray;">在属于你的放松地带，释放心灵</p>
-                        <ul>
-                        {% if UserMusicList_C1 %}
-                            {% for music in UserMusicList_C1%}
-                            <li>
-                                <div class="cover-wrap">                
-                                    <div class="cover-mask">
-                                     </div>                 
-                                    <img class="cover" src="{{ music.musicPicUrl }}">             
-                                </div>             
-                                <div>                 
-                                    <h4>{{music.musicName}}</h4> 
-                                    <p>{{music.musicDescribe}}</p>                
-                                </div>  
-                            </li>
-                            {% endfor %}
-                        {% endif%}
-                        </ul>
                     </section>
                 </article>
 
