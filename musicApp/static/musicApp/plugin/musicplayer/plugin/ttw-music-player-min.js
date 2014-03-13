@@ -6,6 +6,574 @@
  * Date: 6/11/11
  * Time: 6:41 AM
  *
+ * Version: 1.01
  * License: You are free to use this file in personal and commercial products, however re-distribution 'as-is' without prior consent is prohibited.
  */
-(function(a){a.fn.ttwMusicPlayer=function(q,f){var p=this,v,e,g,s,b,h,t,q,u,m,j,l;g={jPlayer:"#jquery_jplayer",jPlayerInterface:".jp-interface",playerPrevious:".jp-interface .jp-previous",playerNext:".jp-interface .jp-next",trackList:".tracklist",tracks:".tracks",track:".track",trackRating:".rating-bar",trackInfo:".track-info",rating:".rating",ratingLevel:".rating-level",ratingLevelOn:".on",title:".title",duration:".duration",buy:".buy",buyNotActive:".not-active",playing:".playing",moreButton:".more",player:".player",artist:".artist",artistOuter:".artist-outer",albumCover:".img",description:".description",descriptionShowing:".showing"};v={ratingCallback:null,currencySymbol:"$",buyText:"BUY",tracksToShow:5,autoPlay:false,jPlayer:{}};e=a.extend(true,{},v,f);j=q;l=0;s=function(){q=new b();u=new h();u.buildInterface();q.init(e.jPlayer);p.bind("mbPlaylistLoaded",function(){p.bind("mbInterfaceBuilt",function(){m=new t()});u.init()})};b=function(){var C=false,O,I={},Q,E=0,G=0,A,H;O={listItem:'<li class="track"><span class="title"></span><span class="duration"></span><span class="rating"></span><a href="#" class="buy not-active" target="_blank"></a></li>',ratingBar:'<span class="rating-level rating-bar"></span>'};function L(T){I=a(".ttw-music-player .jPlayer-container");var S,R;S={swfPath:"jquery-jplayer",supplied:"mp3, oga",solution:"html, flash",cssSelectorAncestor:g.jPlayerInterface,errorAlerts:false,warningAlerts:false};R=a.extend(true,{},S,T);I.bind(a.jPlayer.event.ready,function(){I.bind(a.jPlayer.event.ended,function(U){z()});I.bind(a.jPlayer.event.play,function(U){I.jPlayer("pauseOthers");Q.eq(l).addClass(n(g.playing)).siblings().removeClass(n(g.playing))});I.bind(a.jPlayer.event.playing,function(U){C=true});I.bind(a.jPlayer.event.pause,function(U){C=false});a(g.playerPrevious).click(function(){y();a(this).blur();return false});a(g.playerNext).click(function(){z();a(this).blur();return false});p.bind("mbInitPlaylistAdvance",function(U){var V=this.getData("mbInitPlaylistAdvance");if(V!=l){l=V;N(l)}else{if(!I.data("jPlayer").status.srcSet){N(0)}else{D()}}});K();p.trigger("mbPlaylistLoaded");B(e.autoplay)});I.jPlayer(R)}function B(R){l=0;if(R){N(l)}else{J(l);p.trigger("mbPlaylistInit")}}function J(R){l=R;I.jPlayer("setMedia",j[l])}function N(R){J(R);if(R>=e.tracksToShow){M()}p.trigger("mbPlaylistAdvance");I.jPlayer("play")}function z(){var R=(l+1<j.length)?l+1:0;N(R)}function y(){var R=(l-1>=0)?l-1:j.length-1;N(R)}function D(){if(!C){I.jPlayer("play")}else{I.jPlayer("pause")}}function K(){var R=a();A=p.find(g.tracks);for(var T=0;T<10;T++){R=R.add(O.ratingBar)}for(var S=0;S<j.length;S++){var V=a(O.listItem);V.find(g.rating).html(R.clone());V.find(g.title).html(i(S));V.find(g.duration).html(x(S));d("track",V,S);F(V,S);V.data("index",S);A.append(V)}Q=a(g.track);Q.slice(0,e.tracksToShow).each(function(){E+=a(this).outerHeight()});Q.slice(e.tracksToShow,j.length).each(function(){G+=a(this).outerHeight()});if(G>0){var U=a(g.trackList);A.height(E);U.addClass("show-more-button");U.find(g.moreButton).click(function(){H=a(this);M()})}Q.find(".title").click(function(){N(a(this).parents("li").data("index"))})}function M(){if(c(H)){H=p.find(g.moreButton)}A.animate({height:E+G},function(){H.animate({opacity:0},function(){H.slideUp(function(){H.parents(g.trackList).removeClass("show-more-button");H.remove()})})})}function x(R){return !c(j[R].duration)?j[R].duration:"-"}function F(S,R){if(!c(j[R].buy)){S.find(g.buy).removeClass(n(g.buyNotActive)).attr("href",j[R].buy).html(P(R))}}function P(R){return(!c(j[R].price)?e.currencySymbol+j[R].price:"")+" "+e.buyText}return{init:L,playlistInit:B,playlistAdvance:N,playlistNext:z,playlistPrev:y,togglePlay:D,$myJplayer:I}};t=function(){var x=p.find(g.track);function z(){a(g.rating).find(g.ratingLevel).hover(function(){a(this).addClass("hover").prevAll().addClass("hover").end().nextAll().removeClass("hover")});a(g.rating).mouseleave(function(){a(this).find(g.ratingLevel).removeClass("hover")});a(g.ratingLevel).click(function(){var C=a(this),B=C.parent().children().index(C)+1,A;if(C.hasClass(n(g.trackRating))){B=B/2;A=C.parents("li").data("index");if(A==l){k(B)}}else{A=l;o(x.eq(A),B)}C.prevAll().add(C).addClass(n(g.ratingLevelOn)).end().end().nextAll().removeClass(n(g.ratingLevelOn));y(A,B)})}function y(A,B){j[A].rating=B;r(e.ratingCallback,A,j[A],B)}z()};h=function(){var A,E,G,y;function F(){A=a(g.player),E=A.find(g.title),G=A.find(g.artist),y=A.find(g.albumCover);C();p.bind("mbPlaylistAdvance mbPlaylistInit",function(){z();x();d("current",null,l);B()})}function D(){var H,I;H='<div class="ttw-music-player"><div class="player jp-interface"><div class="album-cover"><span class="img"></span>            <span class="highlight"></span>        </div>        <div class="track-info">            <p class="title"></p>            <p class="artist-outer">By <span class="artist"></span></p>            <div class="rating">                <span class="rating-level rating-star on"></span>                <span class="rating-level rating-star on"></span>                <span class="rating-level rating-star on"></span>                <span class="rating-level rating-star on"></span>                <span class="rating-level rating-star"></span>            </div>        </div>        <div class="player-controls">            <div class="main">                <div class="previous jp-previous"></div>                <div class="play jp-play"></div>                <div class="pause jp-pause"></div>                <div class="next jp-next"></div><!-- These controls aren\'t used by this plugin, but jPlayer seems to require that they exist -->                <span class="unused-controls">                    <span class="jp-video-play"></span>                    <span class="jp-stop"></span>                    <span class="jp-mute"></span>                    <span class="jp-unmute"></span>                    <span class="jp-volume-bar"></span>                    <span class="jp-volume-bar-value"></span>                    <span class="jp-volume-max"></span>                    <span class="jp-current-time"></span>                    <span class="jp-duration"></span>                    <span class="jp-full-screen"></span>                    <span class="jp-restore-screen"></span>                    <span class="jp-repeat"></span>                    <span class="jp-repeat-off"></span>                    <span class="jp-gui"></span>                </span>            </div>            <div class="progress-wrapper">                <div class="progress jp-seek-bar">                    <div class="elapsed jp-play-bar"></div>                </div>            </div>        </div>    </div>    <p class="description"></p>    <div class="tracklist">        <ol class="tracks"> </ol>        <div class="more">View More...</div>    </div>    <div class="jPlayer-container"></div></div>';I=a(H).css({display:"none",opacity:0}).appendTo(p).slideDown("slow",function(){I.animate({opacity:1});p.trigger("mbInterfaceBuilt")})}function z(){E.html(i(l))}function x(){if(c(j[l].artist)){G.parent(g.artistOuter).animate({opacity:0},"fast")}else{G.html(j[l].artist).parent(g.artistOuter).animate({opacity:1},"fast")}}function B(){y.animate({opacity:0},"fast",function(){if(!c(j[l].cover)){var H=l;a('<img src="'+j[l].cover+'" alt="album cover" />',this).imagesLoaded(function(){if(H==l){y.html(a(this)).animate({opacity:1})}})}})}function C(){if(!c(e.description)){p.find(g.description).html(e.description).addClass(n(g.descriptionShowing)).slideDown()}}return{buildInterface:D,init:F}};function i(x){if(!c(j[x].title)){return j[x].title}else{if(!c(j[x].mp3)){return w(j[x].mp3)}else{if(!c(j[x].oga)){return w(j[x].oga)}else{return""}}}}function w(x){x=x.split("/");return x[x.length-1]}function d(z,A,x){if(z=="track"){if(!c(j[x].rating)){o(A,j[x].rating)}}else{var y=!c(j[x].rating)?Math.ceil(j[x].rating):0;k(y)}}function k(x){p.find(g.trackInfo).find(g.ratingLevel).removeClass(n(g.ratingLevelOn)).slice(0,x).addClass(n(g.ratingLevelOn))}function o(y,x){y.find(g.ratingLevel).removeClass(n(g.ratingLevelOn)).slice(0,x*2).addClass(n(g.ratingLevelOn))}function n(x){return x.substr(1)}function r(y){var x=Array.prototype.slice.call(arguments,1);if(a.isFunction(y)){y.apply(this,x)}}function c(x){return typeof x=="undefined"}s()}})(jQuery);(function(a){a.fn.imagesLoaded=function(d){var c=this.filter("img"),b=c.length;c.bind("load",function(){if(--b<=0){d.call(c,this)}}).each(function(){if(this.complete||this.complete===undefined){var e=this.src;this.src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";this.src=e}});return this}})(jQuery);
+
+(function($) {
+    $.fn.ttwMusicPlayer = function(playlist, userOptions) {
+        var $self = this, defaultOptions, options, cssSelector, appMgr, playlistMgr, interfaceMgr, ratingsMgr, playlist,
+                layout, ratings, myPlaylist, current;
+
+        cssSelector = {
+            jPlayer: "#jquery_jplayer",
+            jPlayerInterface: '.jp-interface',
+            playerPrevious: ".jp-interface .jp-previous",
+            playerNext: ".jp-interface .jp-next",
+            trackList:'.tracklist',
+            tracks:'.tracks',
+            track:'.track',
+            trackRating:'.rating-bar',
+            trackInfo:'.track-info',
+            rating:'.rating',
+            ratingLevel:'.rating-level',
+            ratingLevelOn:'.on',
+            title: '.title',
+            duration: '.duration',
+            buy:'.buy',
+            buyNotActive:'.not-active',
+            playing:'.playing',
+            moreButton:'.more',
+            player:'.player',
+            artist:'.artist',
+            artistOuter:'.artist-outer',
+            albumCover:'.img',
+            description:'.description',
+            descriptionShowing:'.showing'
+        };
+
+        defaultOptions = {
+            ratingCallback:null,
+            currencySymbol:'$',
+            buyText:'BUY',
+            tracksToShow:5,
+            autoPlay:false,
+            jPlayer:{}
+        };
+
+        options = $.extend(true, {}, defaultOptions, userOptions);
+
+        myPlaylist = playlist;
+
+        current = 0;
+
+        appMgr = function() {
+            playlist = new playlistMgr();
+            layout = new interfaceMgr();
+
+            layout.buildInterface();
+            playlist.init(options.jPlayer);
+
+            //don't initialize the ratings until the playlist has been built, which wont happen until after the jPlayer ready event
+            $self.bind('mbPlaylistLoaded', function() {
+                $self.bind('mbInterfaceBuilt', function() {
+                    ratings = new ratingsMgr();
+                });
+                layout.init();
+
+            });
+        };
+
+        playlistMgr = function() {
+
+            var playing = false, markup, $myJplayer = {},$tracks,showHeight = 0,remainingHeight = 0,$tracksWrapper, $more;
+
+            markup = {
+                listItem:'<li class="track">' +
+                            '<span class="title"></span>' +
+                            '<span class="duration"></span>' +
+                            '<span class="rating"></span>' +
+                            '<a href="#" class="buy not-active" target="_blank"></a>' +
+                        '</li>',
+                ratingBar:'<span class="rating-level rating-bar"></span>'
+            };
+
+            function init(playlistOptions) {
+
+                $myJplayer = $('.ttw-music-player .jPlayer-container');
+
+
+                var jPlayerDefaults, jPlayerOptions;
+
+                jPlayerDefaults = {
+                    swfPath: "jquery-jplayer",
+                    supplied: "mp3, oga",
+                    solution:'html, flash',
+                    cssSelectorAncestor:  cssSelector.jPlayerInterface,
+                    errorAlerts: false,
+                    warningAlerts: false
+                };
+
+                //apply any user defined jPlayer options
+                jPlayerOptions = $.extend(true, {}, jPlayerDefaults, playlistOptions);
+
+                $myJplayer.bind($.jPlayer.event.ready, function() {
+
+                    //Bind jPlayer events. Do not want to pass in options object to prevent them from being overridden by the user
+                    $myJplayer.bind($.jPlayer.event.ended, function(event) {
+                        playlistNext();
+                    });
+
+                    $myJplayer.bind($.jPlayer.event.play, function(event) {
+                        $myJplayer.jPlayer("pauseOthers");
+                        $tracks.eq(current).addClass(attr(cssSelector.playing)).siblings().removeClass(attr(cssSelector.playing));
+                    });
+
+                    $myJplayer.bind($.jPlayer.event.playing, function(event) {
+                        playing = true;
+                    });
+
+                    $myJplayer.bind($.jPlayer.event.pause, function(event) {
+                        playing = false;
+                    });
+
+                    //Bind next/prev click events
+                    $(cssSelector.playerPrevious).click(function() {
+                        playlistPrev();
+                        $(this).blur();
+                        return false;
+                    });
+
+                    $(cssSelector.playerNext).click(function() {
+                        playlistNext();
+                        $(this).blur();
+                        return false;
+                    });
+
+                    $self.bind('mbInitPlaylistAdvance', function(e) {
+                        var changeTo = this.getData('mbInitPlaylistAdvance');
+
+                        if (changeTo != current) {
+                            current = changeTo;
+                            playlistAdvance(current);
+                        }
+                        else {
+                            if (!$myJplayer.data('jPlayer').status.srcSet) {
+                                playlistAdvance(0);
+                            }
+                            else {
+                                togglePlay();
+                            }
+                        }
+                    });
+
+                    buildPlaylist();
+                    //If the user doesn't want to wait for widget loads, start playlist now
+                    $self.trigger('mbPlaylistLoaded');
+
+                    playlistInit(options.autoplay);
+                });
+
+                //Initialize jPlayer
+                $myJplayer.jPlayer(jPlayerOptions);
+            }
+
+            function playlistInit(autoplay) {
+                current = 0;
+
+                if (autoplay) {
+                    playlistAdvance(current);
+                }
+                else {
+                    playlistConfig(current);
+                    $self.trigger('mbPlaylistInit');
+                }
+            }
+
+            function playlistConfig(index) {
+                current = index;
+                $myJplayer.jPlayer("setMedia", myPlaylist[current]);
+            }
+
+            function playlistAdvance(index) {
+                playlistConfig(index);
+
+                if (index >= options.tracksToShow)
+                    showMore();
+
+                $self.trigger('mbPlaylistAdvance');
+                $myJplayer.jPlayer("play");
+            }
+
+            function playlistNext() {
+                var index = (current + 1 < myPlaylist.length) ? current + 1 : 0;
+                playlistAdvance(index);
+            }
+
+            function playlistPrev() {
+                var index = (current - 1 >= 0) ? current - 1 : myPlaylist.length - 1;
+                playlistAdvance(index);
+            }
+
+            function togglePlay() {
+                if (!playing)
+                    $myJplayer.jPlayer("play");
+                else $myJplayer.jPlayer("pause");
+            }
+
+            function buildPlaylist() {
+                var $ratings = $();
+
+                $tracksWrapper = $self.find(cssSelector.tracks);
+
+                //set up the html for the track ratings
+                for (var i = 0; i < 10; i++)
+                    $ratings = $ratings.add(markup.ratingBar);
+
+                for (var j = 0; j < myPlaylist.length; j++) {
+                    var $track = $(markup.listItem);
+
+                    //since $ratings refers to a specific object, if we just use .html($ratings) we would be moving the $rating object from one list item to the next
+                    $track.find(cssSelector.rating).html($ratings.clone());
+
+                    $track.find(cssSelector.title).html(trackName(j));
+
+                    $track.find(cssSelector.duration).html(duration(j));
+
+                    setRating('track', $track, j);
+
+                    setBuyLink($track, j);
+
+                    $track.data('index', j);
+
+                    $tracksWrapper.append($track);
+                }
+
+                $tracks = $(cssSelector.track);
+
+                $tracks.slice(0, options.tracksToShow).each(function() {
+                    showHeight += $(this).outerHeight();
+                });
+
+                $tracks.slice(options.tracksToShow, myPlaylist.length).each(function() {
+                    remainingHeight += $(this).outerHeight();
+                });
+
+                if (remainingHeight > 0) {
+                    var $trackList = $(cssSelector.trackList);
+
+                    $tracksWrapper.height(showHeight);
+                    $trackList.addClass('show-more-button');
+
+                    $trackList.find(cssSelector.moreButton).click(function() {
+                        $more = $(this);
+
+                        showMore();
+                    });
+                }
+
+                $tracks.find('.title').click(function() {
+                    playlistAdvance($(this).parents('li').data('index'));
+                });
+            }
+
+            function showMore() {
+                if (isUndefined($more))
+                    $more = $self.find(cssSelector.moreButton);
+
+                $tracksWrapper.animate({height: showHeight + remainingHeight}, function() {
+                    $more.animate({opacity:0}, function() {
+                        $more.slideUp(function() {
+                            $more.parents(cssSelector.trackList).removeClass('show-more-button');
+                            $more.remove();
+
+                        });
+                    });
+                });
+            }
+
+            function duration(index) {
+                return !isUndefined(myPlaylist[index].duration) ? myPlaylist[index].duration : '-';
+            }
+
+            function setBuyLink($track, index) {
+                if (!isUndefined(myPlaylist[index].buy)) {
+                    $track.find(cssSelector.buy).removeClass(attr(cssSelector.buyNotActive)).attr('href', myPlaylist[index].buy).html(buyText(index));
+                }
+            }
+
+            function buyText(index) {
+                return (!isUndefined(myPlaylist[index].price) ? options.currencySymbol + myPlaylist[index].price : '') + ' ' + options.buyText;
+            }
+
+            return{
+                init:init,
+                playlistInit:playlistInit,
+                playlistAdvance:playlistAdvance,
+                playlistNext:playlistNext,
+                playlistPrev:playlistPrev,
+                togglePlay:togglePlay,
+                $myJplayer:$myJplayer
+            };
+
+        };
+
+        ratingsMgr = function() {
+
+            var $tracks = $self.find(cssSelector.track);
+
+            function bindEvents() {
+
+                //Handler for when user hovers over a rating
+                $(cssSelector.rating).find(cssSelector.ratingLevel).hover(function() {
+                    $(this).addClass('hover').prevAll().addClass('hover').end().nextAll().removeClass('hover');
+                });
+
+                //Restores previous rating when user is finished hovering (assuming there is no new rating)
+                $(cssSelector.rating).mouseleave(function() {
+                    $(this).find(cssSelector.ratingLevel).removeClass('hover');
+                });
+
+                //Set the new rating when the user clicks
+                $(cssSelector.ratingLevel).click(function() {
+                    var $this = $(this), rating = $this.parent().children().index($this) + 1, index;
+
+                    if ($this.hasClass(attr(cssSelector.trackRating))) {
+                        rating = rating / 2;
+                        index = $this.parents('li').data('index');
+
+                        if (index == current)
+                            applyCurrentlyPlayingRating(rating);
+                    }
+                    else {
+                        index = current;
+                        applyTrackRating($tracks.eq(index), rating);
+                    }
+
+
+                    $this.prevAll().add($this).addClass(attr(cssSelector.ratingLevelOn)).end().end().nextAll().removeClass(attr(cssSelector.ratingLevelOn));
+
+                    processRating(index, rating);
+                });
+            }
+
+            function processRating(index, rating) {
+                myPlaylist[index].rating = rating;
+                runCallback(options.ratingCallback, index, myPlaylist[index], rating);
+            }
+
+            bindEvents();
+        };
+
+        interfaceMgr = function() {
+
+            var $player, $title, $artist, $albumCover;
+
+
+            function init() {
+                $player = $(cssSelector.player),
+                        $title = $player.find(cssSelector.title),
+                        $artist = $player.find(cssSelector.artist),
+                        $albumCover = $player.find(cssSelector.albumCover);
+
+                setDescription();
+
+                $self.bind('mbPlaylistAdvance mbPlaylistInit', function() {
+                    setTitle();
+                    setArtist();
+                    setRating('current', null, current);
+                    setCover();
+                });
+            }
+
+            function buildInterface() {
+                var markup, $interface;
+
+                //I would normally use the templating plugin for something like this, but I wanted to keep this plugin's footprint as small as possible
+                markup = '<div class="ttw-music-player">' +
+                        '<div class="player jp-interface">' +
+                        '<div class="album-cover">' +
+                        '<span class="img"></span>' +
+                        '            <span class="highlight"></span>' +
+                        '        </div>' +
+                        '        <div class="track-info">' +
+                        '            <p class="title"></p>' +
+                        '            <p class="artist-outer">  <span class="artist"></span></p>' +
+                        '            <div class="rating">' +
+                        '                <span class="rating-level rating-star on"></span>' +
+                        '                <span class="rating-level rating-star on"></span>' +
+                        '                <span class="rating-level rating-star on"></span>' +
+                        '                <span class="rating-level rating-star on"></span>' +
+                        '                <span class="rating-level rating-star"></span>' +
+                        '            </div>' +
+                        '        </div>' +
+                        '        <div class="player-controls">' +
+                        '            <div class="main">' +
+                        // '                <div class="previous jp-previous"></div>' +
+                        '                <div class="play jp-play"></div>' +
+                        '                <div class="pause jp-pause"></div>' +
+                        '                <div class="next jp-next"></div>' +
+                        '<!-- These controls aren\'t used by this plugin, but jPlayer seems to require that they exist -->' +
+                        '                <span class="unused-controls">' +
+                        '                    <span class="jp-video-play"></span>' +
+                        '                    <span class="jp-stop"></span>' +
+                        '                    <span class="jp-mute"></span>' +
+                        '                    <span class="jp-unmute"></span>' +
+                        '                    <span class="jp-volume-bar"></span>' +
+                        '                    <span class="jp-volume-bar-value"></span>' +
+                        '                    <span class="jp-volume-max"></span>' +
+                        '                    <span class="jp-current-time"></span>' +
+                        '                    <span class="jp-duration"></span>' +
+                        '                    <span class="jp-full-screen"></span>' +
+                        '                    <span class="jp-restore-screen"></span>' +
+                        '                    <span class="jp-repeat"></span>' +
+                        '                    <span class="jp-repeat-off"></span>' +
+                        '                    <span class="jp-gui"></span>' +
+                        '                </span>' +
+                        '            </div>' +
+                        '            <div class="progress-wrapper">' +
+                        '                <div class="progress jp-seek-bar">' +
+                        '                    <div class="elapsed jp-play-bar"></div>' +
+                        '                </div>' +
+                        '            </div>' +
+                        '        </div>' +
+                        '    </div>' +
+                        '    <p class="description"></p>' +
+                        '    <div class="tracklist">' +
+                        '        <ol class="tracks"> </ol>' +
+                        '        <div class="more">more</div>' +
+                        '    </div>' +
+                        '    <div class="jPlayer-container"></div>' +
+                        '</div>';
+
+                $interface = $(markup).css({display:'none', opacity:0}).appendTo($self).slideDown('slow', function() {
+                    $interface.animate({opacity:1});
+
+                    $self.trigger('mbInterfaceBuilt');
+                });
+            }
+
+            function setTitle() {
+                $title.html(trackName(current));
+            }
+
+            function setArtist() {
+                if (isUndefined(myPlaylist[current].artist))
+                    $artist.parent(cssSelector.artistOuter).animate({opacity:0}, 'fast');
+                else {
+                    $artist.html(myPlaylist[current].artist).parent(cssSelector.artistOuter).animate({opacity:1}, 'fast');
+                }
+            }
+
+            function setCover() {
+                $albumCover.animate({opacity:0}, 'fast', function() {
+                    if (!isUndefined(myPlaylist[current].cover)) {
+                        var now = current;
+                        $('<img src="' + myPlaylist[current].cover + '" alt="album cover" />', this).imagesLoaded(function(){
+                            if(now == current)
+                                $albumCover.html($(this)).animate({opacity:1})
+                        });
+                    }
+                });
+            }
+
+            function setDescription() {
+                if (!isUndefined(options.description))
+                    $self.find(cssSelector.description).html(options.description).addClass(attr(cssSelector.descriptionShowing)).slideDown();
+            }
+
+            return{
+                buildInterface:buildInterface,
+                init:init
+            }
+
+        };
+
+        /** Common Functions **/
+        function trackName(index) {
+            if (!isUndefined(myPlaylist[index].title))
+                return myPlaylist[index].title;
+            else if (!isUndefined(myPlaylist[index].mp3))
+                return fileName(myPlaylist[index].mp3);
+            else if (!isUndefined(myPlaylist[index].oga))
+                return fileName(myPlaylist[index].oga);
+            else return '';
+        }
+
+        function fileName(path) {
+            path = path.split('/');
+            return path[path.length - 1];
+        }
+
+        function setRating(type, $track, index) {
+            if (type == 'track') {
+                if (!isUndefined(myPlaylist[index].rating)) {
+                    applyTrackRating($track, myPlaylist[index].rating);
+                }
+            }
+            else {
+                //if the rating isn't set, use 0
+                var rating = !isUndefined(myPlaylist[index].rating) ? Math.ceil(myPlaylist[index].rating) : 0;
+                applyCurrentlyPlayingRating(rating);
+            }
+        }
+
+        function applyCurrentlyPlayingRating(rating) {
+            //reset the rating to 0, then set the rating defined above
+            $self.find(cssSelector.trackInfo).find(cssSelector.ratingLevel).removeClass(attr(cssSelector.ratingLevelOn)).slice(0, rating).addClass(attr(cssSelector.ratingLevelOn));
+
+        }
+
+        function applyTrackRating($track, rating) {
+            //multiply rating by 2 since the list ratings have 10 levels rather than 5
+            $track.find(cssSelector.ratingLevel).removeClass(attr(cssSelector.ratingLevelOn)).slice(0, rating * 2).addClass(attr(cssSelector.ratingLevelOn));
+
+        }
+
+
+        /** Utility Functions **/
+        function attr(selector) {
+            return selector.substr(1);
+        }
+
+        function runCallback(callback) {
+            var functionArgs = Array.prototype.slice.call(arguments, 1);
+
+            if ($.isFunction(callback)) {
+                callback.apply(this, functionArgs);
+            }
+        }
+
+        function isUndefined(value) {
+            return typeof value == 'undefined';
+        }
+
+        appMgr();
+    };
+})(jQuery);
+
+(function($) {
+// $('img.photo',this).imagesLoaded(myFunction)
+// execute a callback when all images have loaded.
+// needed because .load() doesn't work on cached images
+
+// mit license. paul irish. 2010.
+// webkit fix from Oren Solomianik. thx!
+
+// callback function is passed the last image to load
+//   as an argument, and the collection as `this`
+
+
+    $.fn.imagesLoaded = function(callback) {
+        var elems = this.filter('img'),
+                len = elems.length;
+
+        elems.bind('load',
+                function() {
+                    if (--len <= 0) {
+                        callback.call(elems, this);
+                    }
+                }).each(function() {
+            // cached images don't fire load sometimes, so we reset src.
+            if (this.complete || this.complete === undefined) {
+                var src = this.src;
+                // webkit hack from http://groups.google.com/group/jquery-dev/browse_thread/thread/eee6ab7b2da50e1f
+                // data uri bypasses webkit log warning (thx doug jones)
+                this.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+                this.src = src;
+            }
+        });
+
+        return this;
+    };
+})(jQuery);

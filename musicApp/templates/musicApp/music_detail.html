@@ -9,7 +9,7 @@
 
 <form action = '{% url 'musicApp:love' music.pk %}' method = 'post'>
 {% csrf_token %}
-	<img src="http://img5.douban.com/mpic/s3951858.jpg"/>
+	<img src={{ music.musicPicUrl }}>
 
 	<label type='hide' name='loveChoose'></label>
 

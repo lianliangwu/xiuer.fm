@@ -5,10 +5,17 @@ from django.views import generic
 from django.utils import timezone
 from django.core import serializers
 
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login ,logout
+
+from musicApp.forms import UserForm
+
 import logging
 
 import sys
+import os
 import json
+import subprocess
 import urllib.request
 
 from musicApp.models import Music
@@ -34,20 +41,15 @@ class LoveMusicView(generic.ListView):
 
 # def argument view3
 def love(request,music_id):
-	# return HttpResponse("You are loving on question %s." % music_id)
-	music = get_object_or_404(Music, pk=music_id)
-
-	# choose = request.POST.get["loveChoose",'True']
 	try:
-		love = UserLoveMusic(userId = 1,musicId = 1)
+		user_id = request.session['user_id']
+		logging.debug("WILL"+user_id)
+		
+		love = UserLoveMusic(userId = user_id,musicId = int(music_id))
 		love.save()
 	except (KeyError,UserLoveMusic.DoesNotExist):
-		return render(request,'musicApp/detail.html',{
-			'music':music,
-			'error_message':'You didnot select a choice.',
-			})
-	else:
-		return HttpResponseRedirect(reverse('musicApp:music-list'))
+		return render(request,'musicApp/error.html')
+	return HttpResponseRedirect(reverse('musicApp:music-userHome',args=(user_id,)))
 
 # def downloadMusic view
 def downloadMusic(request,music_id):
@@ -56,19 +58,49 @@ def downloadMusic(request,music_id):
 
 # get music list
 def getMyPlayList():
-	musicList = list(Music.objects.all())
+	musicList = list(Music.objects.order_by('?')[0:12])
 	myPlaylist ='['
 	for music in musicList:
-		mp3 = '/static/musicApp/music/'+ music.musicCode + '.mp3'
-		cover = '/static/musicApp/images/'+ music.musicCode + '.jpg'
-		myPlaylist = myPlaylist+'{\"mp3\":\"'+mp3+'\",\"cover\":\"'+cover+'\"},'
+		
+		mp3 = '/static/musicApp/'+ music.musicUrl[7:]
+		# logging.debug(mp3)
+
+		cover = music.musicPicUrl
+
+		title = music.musicName.replace('"', '\\"')
+		artist = music.musicArtist.replace('"', '\\"')
+
+		myPlaylist = myPlaylist+'{\"mp3\":\"'+mp3+'\",\"title\":\"'+title+'\",\"cover\":\"'+cover+'\",\"artist\":\"'+artist+'\"},'
+	
 	last_myPlaylist = myPlaylist[0:-1]+']'
 	# logging.debug(last_myPlaylist)
+	return last_myPlaylist
+
+# get music list :contain only one music
+def getOneMusicPlayList(id):
+	music = Music.objects.get(id = id)
+
+	myPlaylist ='['
+	mp3 = '/static/musicApp/'+ music.musicUrl[7:]
+	cover = music.musicPicUrl
+	title = music.musicName.replace('"', '\\"')
+	artist = music.musicArtist.replace('"', '\\"')
+
+	myPlaylist = myPlaylist+'{\"mp3\":\"'+mp3+'\",\"title\":\"'+title+'\",\"cover\":\"'+cover+'\",\"artist\":\"'+artist+'\"},'
+	
+	last_myPlaylist = myPlaylist[0:-1]+']'
 	return last_myPlaylist
 
 # to the music home page
 def musicHome(request):
 	myPlaylist = getMyPlayList()
+	return render(request,'musicApp/music_home.html',{
+		'myPlaylist2': myPlaylist,
+		})
+
+# listen one music
+def oneMusicHome(request,music_id):
+	myPlaylist = getOneMusicPlayList(id = int(music_id))
 	return render(request,'musicApp/music_home.html',{
 		'myPlaylist2': myPlaylist,
 		})
@@ -84,30 +116,26 @@ def userHome(request,user_id):
 	userId = int(user_id)
 	logging.debug(userId)
 	userLoveMusicList = list(UserLoveMusic.objects.filter(userId = userId))
-	type1UserMusicList = []
-	type2UserMusicList = []
-	type3UserMusicList = []
+	# All music list:random
+	UserMusicList_C0 = []
+	# love music list
+	UserMusicList_C1 = []
 
 	for userLoveMusic in userLoveMusicList:
-		logging.debug(userLoveMusic.musicId)
 		music = Music.objects.get(id = int(userLoveMusic.musicId))
-		logging.debug(music.musicName)
-		if music.musicType == '1':
-			type1UserMusicList.append(music)
-		elif music.musicType == '2':
-			type2UserMusicList.append(music)
-		else:
-			type3UserMusicList.append(music)
+		UserMusicList_C1.append(music)
+	UserMusicList_C0 = Music.objects.order_by('?')[0:20]
 
 	return render(request,'musicApp/user_home.html',{
-		'type1UserMusicList':type1UserMusicList,
-		'type2UserMusicList':type2UserMusicList
+		'UserMusicList_C0':UserMusicList_C0,
+		'UserMusicList_C1':UserMusicList_C1
 		})
 
 # admin:download music information
 def admin(request):
 	# logging
 	logging.basicConfig(filename='musicAppLog.out',level=logging.DEBUG)
+	logging.debug("123")
 	
 	while True:
 		# get the online music play list
@@ -123,47 +151,93 @@ def admin(request):
 		songs = json.loads(content.decode("utf-8"))['song']
 		# log in file
 		logging.debug(songs)
-		for songList in songs:
-			for song in songList:
-				# picture url
-				picture = song['picture']
-				# song artist
-				artist = song['artist']
-				# song url
-				url = song['url']
-				# song title
-				title = song['title']
-				# like or not
-				like = song['like']
-				# song public_time
-				public_time = song['public_time']
-				# albumtitle
-				albumtitle = song['albumtitle']
+		# for songList in songs:
+		for song in songs:
+			# picture url
+			picture = song['picture']
+			# song artist
+			artist = song['artist']
+			# song url
+			url = song['url']
+			# song title
+			title = song['title']
+			# like or not
+			like = song['like']
+			# song public_time
+			public_time = song['public_time']
+			# albumtitle
+			albumtitle = song['albumtitle']
 
-				try:
-					music = Music(musicPicUrl = picture,musicArtist = artist,musicUrl = url,musicName = title,musicLike = like,
-						musicPubTime = public_time,musicAlbumtitle = albumtitle)
-					# save the text information
-					music.save()
+			try:
+				music = Music(musicPicUrl = picture,musicArtist = artist,musicUrl = url,musicName = title,musicLike = like,
+					musicPubTime = public_time,musicAlbumtitle = albumtitle)
+				# save the text information
+				music.save()
 
-					# 下载专辑
-					songMp3 = 'music/' + title
-					if not os.path.exists(songMp3):
-					    subprocess.call([
-					    	'wget','-r',
-					    	'-A','.mp3',
-					    	url
-					    	])
+				# 下载专辑
+				songMp3 = 'music/' + title
+				if not os.path.exists(songMp3):
+				    subprocess.call([
+				    	'wget','-r',
+				    	'-A','.mp3',
+				    	url
+				    	])
+			except (KeyError,Music.DoesNotExist):
+				return render(request,'musicApp/detail.html',{
+					'music':music,
+					'error_message':'download error.',
+					})
+		
+	return HttpResponseRedirect(reverse('musicApp:music-list'))
+
+# register
+def register(request):
+	if request.method == 'POST':
+		username = request.POST['username']
+		email = request.POST['email']
+		password = request.POST['password']
+		user = User.objects.create_user(username, email, password)
+		user.save()
+	myPlaylist = getMyPlayList()
+	return render(request,'musicApp/user_music_home.html',{
+		'user':user,
+		'myPlaylist2': myPlaylist, 
+		})
+
+# login
+def login_view(request):
+	username = request.POST['username']
+	password = request.POST['password']
+	user = authenticate(username=username, password=password)
+	if user is not None:
+		if user.is_active:
+			login(request, user)
+			# Redirect to a success page.
+			myPlaylist = getMyPlayList()
+			return render(request,'musicApp/user_music_home.html',{
+				'user':user,
+				'myPlaylist2': myPlaylist, 
+			})
+	else:
+		# Return an 'invalid login' error message.
+		myPlaylist = getMyPlayList()
+		return render(request,'musicApp/user_music_home.html',{
+				'myPlaylist2': myPlaylist, 
+				'error_message':'用户名或密码错误'
+			})
+
+# logout
+def logout_view(request):
+	logout(request)
+	# Redirect to a success page.
+	myPlaylist = getMyPlayList()
+	return render(request,'musicApp/music_home.html',{
+				'myPlaylist2': myPlaylist, 
+			})
 
 
 
-				except (KeyError,Music.DoesNotExist):
-					return render(request,'musicApp/detail.html',{
-						'music':music,
-						'error_message':'You didnot select a choice.',
-						})
-				else:
-					return HttpResponseRedirect(reverse('musicApp:music-list'))
+
 
  
 

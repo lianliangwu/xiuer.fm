@@ -10,26 +10,125 @@
     <link rel="stylesheet" type="text/css" href="{% static 'musicApp/plugin/musicplayer/demo/css/demo.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'musicApp/css/musicApp.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'musicApp/css/bootstrap.css' %}" media="screen">
-    <!-- <script type="text/javascript" src="{% static 'musicApp/js/jquery-1.10.2.min.js' %}"></script> -->
+
+    <!-- Add bootstrap lib -->
+    <!-- 最新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="{% static 'musicApp/common/dist/css/bootstrap.min.css' %}">
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="{% static 'musicApp/common/dist/css/bootstrap-theme.min.css' %}">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="{% static 'musicApp/common/dist/js/jquery.min.js' %}"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="{% static 'musicApp/common/dist/js/bootstrap.min.js' %}"></script>
+    <!-- END:Add bootstrap lib -->
+
     <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/demo/js/jquery-1.6.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/plugin/jquery-jplayer/jquery.jplayer.js' %}"></script>
+
     <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/plugin/ttw-music-player-min.js' %}"></script>
     <script type="text/javascript" src="{% static 'musicApp/musicAppJs/musicList.js' %}"></script>
 
-    <div id="logo"> </div>
+    <div id="logo-div">
+        <div id="logo"> </div>
+        <div id="login-div"> 
+            <a href="#" data-toggle="modal" data-target="#login_form_modal" style="text-decoration: none;">登录 &nbsp</a>
+            <a href="#" data-toggle="modal" data-target="#register_form_modal" style="text-decoration: none;">马上注册</a>
+        </div>
+    </div>
+
 
 </head>
 
 <body>
     
-    <div id="title"></div>
     <div id='content'>
         <input type='hidden' id='myPlaylist_input' value='{{myPlaylist2}}'/>
-        <div id='left-content' class='col-md7'></div>
-        <div id='right-content' class='col-md5'></div>
     </div>
+
+    <!-- login dialog -->
     <div>
-        <a href="{% url 'musicApp:music-admin' %}">admin download</a>
+        <!-- login_form_modal -->
+        <div class="modal fade" id="login_form_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="left: 0%;">
+                <form action="/musicApp/login/" method="POST">
+                    {% csrf_token %} 
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <div style="font: 13px/1.6 arial,helvetica,sans-serif;padding: 5px 7px;"> 登录 </div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-8 ">
+                                    <div class="input-group " style="margin-bottom: 10px;">
+                                        <span class="input-group-addon">帐号</span>
+                                        <input name="username" value="{{ user.username }}" type="text" class="form-control" placeholder="UserName">
+                                    </div>
+                                    <div class="input-group " style="margin-bottom: -15px;">
+                                        <span class="input-group-addon">密码</span>
+                                        <input name="password" value="{{ user.password }}" type="password" class="form-control" placeholder="Password">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div id="logo" style="margin: auto;"> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <p style="float: left;font-family: monospace;font-style: italic;"> 
+                                <font style="color: rgb(147, 204, 142);font-size: 14px;"><font style="color: rgb(90, 185, 230);font-size: xx-large;">xiuer.FM </font> -special for you</font></p>
+                            <button type="submit" class="btn btn-default"> 登录 </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
+
+    <!-- register dialog -->
+    <div>
+        <!-- register_form_modal -->
+        <div class="modal fade" id="register_form_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" style="left: 0%;">
+                <form action="/musicApp/register/" method="POST">
+                    {% csrf_token %} 
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <div style="font: 13px/1.6 arial,helvetica,sans-serif;padding: 5px 7px;"> 注册 </div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-8 ">
+                                    <div class="input-group " style="margin-bottom: 10px;">
+                                        <span class="input-group-addon">帐号</span>
+                                        <input name="username" value="{{ user.username }}" type="text" class="form-control" placeholder="UserName">
+                                    </div>
+                                    <div class="input-group " style="margin-bottom: 10px;">
+                                        <span class="input-group-addon">邮箱</span>
+                                        <input name="email" value="{{ user.email }}" type="text" class="form-control" placeholder="Email">
+                                    </div>
+                                    <div class="input-group " style="margin-bottom: -15px;">
+                                        <span class="input-group-addon">密码</span>
+                                        <input name="password" value="{{ user.password }}" type="password" class="form-control" placeholder="Password">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div id="logo" style="margin: auto;"> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <p style="float: left;font-family: monospace;font-style: italic;"> 
+                                <font style="color: rgb(147, 204, 142);font-size: 14px;"><font style="color: rgb(90, 185, 230);font-size: xx-large;">xiuer.FM </font> -special for you</font></p>
+                            <button type="submit" class="btn btn-default"> 注册 </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 </html>

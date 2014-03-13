@@ -12,7 +12,8 @@ body{
 
 #logo{
 	display: block;
-	/*margin: 62px 0 0 165px;*/
+	float: left;
+	margin: 55px 0 0 -92px;
 	height: 64px;
 	width: 135px;
 	overflow: hidden;
@@ -32,26 +33,22 @@ body{
 
 /* bootstrap afix style*/
 ul.affix {
-    /*position: fixed; */
-    top: 0px;
-    left: 62px;
-    width: 360px;
+	position: fixed;
+	top: 90px;
+	left: 142px;
+	width: 360px
 }
 ul.affix-top {
-    /*position: fixed;*/
-    top: 0px;
-    left: 62px;
-    width: 360px;
+	position: fixed;
+	top: 90px;
+	left: 142px;
+	width: 360px
 }
 ul.affix-bottom {
-/*    position: relative;
-    top: 60px;
-    left: 62px;
-    width: 360px;*/
-    /*position: absolute;*/
-	position: absolute;
-	top: auto;
-	bottom: 126px;
+	position: fixed;
+	top: 90px;
+	left: 142px;
+	width: 360px
 }
  
 /* First level of nav */
@@ -60,7 +57,7 @@ ul.affix-bottom {
 	margin-bottom: 30px;
 	padding-top:    10px;
 	padding-bottom: 10px;
-	background-color: #f7f5fa;
+	/*background-color: #f7f5fa;*/
 	border-radius: 5px;
 }
  
@@ -100,7 +97,7 @@ ul.affix-bottom {
 	font-size: 90%;
 }
 #content {
-    margin-top:20px;
+    margin-top:39px;
 }
 /*end*/
 
@@ -128,3 +125,70 @@ ul.affix-bottom {
 	width:45px
 }
 
+#logo-div{
+	position: relative;
+	width: 900px;
+	min-height: 144px;
+	margin: 0 auto;
+	z-index: 50;
+}
+
+#login-div {
+	background: #e5e6e6;
+	display: inline-block;
+	margin: 25px -95px 0px 500px;
+	float: right;
+	font: 12px/1.6 arial,helvetica,sans-serif;
+	padding: 8px 17px;
+}
+
+.bs-docs-sidebar .nav>li>a:hover,.bs-docs-sidebar .nav>li>a:focus
+{
+	background-color: transparent;
+	border-left: 1px solid #563d7c;
+	color: #563d7c;
+	padding-left: 19px;
+	text-decoration: none;
+}
+.bs-docs-sidebar .nav>.active>a,.bs-docs-sidebar .nav>.active:hover>a,.bs-docs-sidebar .nav>.active:focus>a
+{
+	background-color: rgba(92, 21, 21, 0);
+	border-left: 2px solid #563d7c;
+	color: #130A20;
+	font-weight: 700;
+	padding-left: 18px;
+}
+
+.slide-lable{
+	font: 14px/1.6 arial,helvetica,sans-serif;
+	/*color: gray;*/
+	margin-left: 20px;
+	margin-top: 10px;
+}
+
+.userhome-music-li{
+	color: gray;
+	font-size: 12px;
+	margin-bottom: 2px;
+	margin-left: 120px;
+	margin-top: 8px;
+}
+
+.love-icon:hover {
+	display: block;
+	background: url('../images/love_icon.png') no-repeat -14px -91px;
+	width: 16px;
+	height: 16px;
+	margin-top: -15px;
+	margin-left: 160px;
+}
+
+.love-icon {
+	/*background: transparent url('../images/love_icon.png') no-repeat;*/
+	display: block;
+	background: url('../images/love_icon.png') no-repeat -14px -63px;
+	width: 16px;
+	height: 16px;
+	margin-top: -15px;
+	margin-left: 160px;
+}
