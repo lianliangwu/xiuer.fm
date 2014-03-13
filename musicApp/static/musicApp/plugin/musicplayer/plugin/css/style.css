@@ -2,7 +2,10 @@
 
 .ttw-music-player {
     width: 370px;
-    margin:-50px 0px 0px 820px;
+    position: fixed;
+    margin-right: 50px;
+    margin-left: 600px;
+    float: inherit;
     font-family: 'Lato', arial, sans-serif;
 }
 
