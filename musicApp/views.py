@@ -43,12 +43,19 @@ class LoveMusicView(generic.ListView):
 def love(request,music_id):
 	user_id = request.user.id
 	logging.debug(user_id)
-	try:
-		love = UserLoveMusic.objects.get(userId = user_id,musicId = int(music_id))
-	except(UserLoveMusic.DoesNotExist):
-		love2 = UserLoveMusic(userId = user_id,musicId = int(music_id))
-		love2.save()
-	return HttpResponseRedirect(reverse('musicApp:music-userHome',args=(user_id,)))
+	if user_id is not None:
+		try:
+			love = UserLoveMusic.objects.get(userId = user_id,musicId = int(music_id))
+		except(UserLoveMusic.DoesNotExist):
+			love2 = UserLoveMusic(userId = user_id,musicId = int(music_id))
+			love2.save()
+		return HttpResponseRedirect(reverse('musicApp:music-userHome',args=(user_id,)))
+	else :
+		myPlaylist = getMyPlayList()
+		return render(request,'musicApp/music_home.html',{
+			'myPlaylist2': myPlaylist, 
+			'error_message':'请重新登录 xiuer.FM'
+		})
 
 # def argument view3
 def unlove(request,music_id):

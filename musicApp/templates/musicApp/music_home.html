@@ -22,7 +22,7 @@
     <script src="{% static 'musicApp/common/dist/js/bootstrap.min.js' %}"></script>
     <!-- END:Add bootstrap lib -->
 
-    <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/demo/js/jquery-1.6.1.min.js' %}"></script>
+    <!-- // <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/demo/js/jquery-1.6.1.min.js' %}"></script> -->
     <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/plugin/jquery-jplayer/jquery.jplayer.js' %}"></script>
 
     <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/plugin/ttw-music-player-min.js' %}"></script>
@@ -41,8 +41,39 @@
 
 <body>
     
+    <!-- temp value store -->
     <div id='content'>
         <input type='hidden' id='myPlaylist_input' value='{{myPlaylist2}}'/>
+    </div>
+    <div id='content'>
+        <input type='hidden' id='error_message_input' value='{{error_message}}'/>
+    </div>
+
+    <!-- error message -->
+    <div class="modal fade error-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="position: initial;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div style="font: 13px/1.6 arial,helvetica,sans-serif;padding: 5px 7px;"> Xiuer.FM 提示您 </div>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-8 ">
+                            {{ error_message }}
+                        </div>
+                        <div class="col-md-4">
+                            <div id="logo" style="margin: auto;"> </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <p style="float: left;font-family: monospace;font-style: italic;"> 
+                        <font style="color: rgb(147, 204, 142);font-size: 14px;"><font style="color: rgb(90, 185, 230);font-size: xx-large;">xiuer.FM </font> -special for you</font></p>
+                    <a href="{% url 'musicApp:music-home' %}"><div class='userhome-font'> Xiuer.FM 主页 </div></a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- login dialog -->

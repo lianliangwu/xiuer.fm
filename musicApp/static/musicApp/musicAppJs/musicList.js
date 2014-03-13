@@ -63,10 +63,9 @@ $(document).ready(function(){
     }
 ]*/
 
+    /*show music player plugin*/
     var myPlaylist = document.getElementById("myPlaylist_input").value
-    // alert(myPlaylist) 
     var myPlaylist3 = JSON.parse(myPlaylist)
-    // alert(myPlaylist3)
     var description = '';
     $('body').ttwMusicPlayer(myPlaylist3, {
         autoplay:true, 
@@ -75,4 +74,10 @@ $(document).ready(function(){
             swfPath:'musicApp/plugin/musicplayer/plugin/jquery-jplayer' 
         }
     });
+
+    /*show error_message modal*/
+    var error_message = document.getElementById("error_message_input").value;
+    if(error_message != null && error_message.length !=0){
+        $('.error-modal').modal();
+    }
 });
