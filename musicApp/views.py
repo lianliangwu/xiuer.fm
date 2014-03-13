@@ -211,28 +211,73 @@ def register(request):
 		'user':user,
 		'myPlaylist2': myPlaylist, 
 		})
-
 # login
 def login_view(request):
+	# POST Method
+	if request.method == 'POST':
+		response = post_login(request)
+	else:
+		response = sso_login(request)
+	return response
+
+# POST LOGIN 正常填写表单post登录
+def post_login(request):
 	username = request.POST['username']
 	password = request.POST['password']
 	user = authenticate(username=username, password=password)
 	if user is not None:
 		if user.is_active:
+			# push user to session
 			login(request, user)
 			# Redirect to a success page.
 			myPlaylist = getMyPlayList()
-			return render(request,'musicApp/user_music_home.html',{
+			response = render(request,'musicApp/user_music_home.html',{
 				'user':user,
 				'myPlaylist2': myPlaylist, 
 			})
+			# push user to cookie
+			response.set_cookie('xiuerFM_username', username)
+			response.set_cookie('xiuerFM_password', password)
+			return response
 	else:
 		# Return an 'invalid login' error message.
 		myPlaylist = getMyPlayList()
-		return render(request,'musicApp/user_music_home.html',{
+		return render(request,'musicApp/music_home.html',{
 				'myPlaylist2': myPlaylist, 
 				'error_message':'用户名或密码错误'
 			})
+
+# SSO LOGIN 根据cookie单点登录
+def sso_login(request):
+	# GET Method
+	# first look up the cookie ,if user exist,then direct to the user_music_home ,else direct to  login page
+	username = request.COOKIES.get('xiuerFM_username')
+	password = request.COOKIES.get('xiuerFM_password')
+	if username is not None and password is not None:
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active:
+				# Redirect to a success page.
+				myPlaylist = getMyPlayList()
+				return render(request,'musicApp/user_music_home.html',{
+					'user':user,
+					'myPlaylist2': myPlaylist, 
+				})
+		else:
+			logging.debug('USER information ERROR')
+			# Return an 'invalid login' error message.
+			myPlaylist = getMyPlayList()
+			return render(request,'musicApp/music_home.html',{
+					'myPlaylist2': myPlaylist, 
+					'error_message':'请登录 xiuer.FM'
+				})
+	else:
+		# Return an 'invalid login' error message.
+		myPlaylist = getMyPlayList()
+		return render(request,'musicApp/music_home.html',{
+				'myPlaylist2': myPlaylist, 
+				'error_message':'请登录 xiuer.FM'
+			})	
 
 # logout
 def logout_view(request):

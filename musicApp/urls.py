@@ -5,8 +5,6 @@ from musicApp import views
 urlpatterns = patterns('',
 
 	url(r'^$', views.IndexView.as_view(), name = 'music-list'),
-
-
 	url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name = 'music-detail'),
 	# ex:/musicApp/5/results/
 	url(r'^(?P<user_id>\d+)/lovemusic/$', views.LoveMusicView.as_view(), name = 'userlovemusic-list'),

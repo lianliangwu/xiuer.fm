@@ -181,7 +181,9 @@
                                             <div class="userhome-music-li">专辑 {{music.musicAlbumtitle}}</div>
                                             <div class="userhome-music-li">发行时间 {{music.musicPubTime}}</div>
                                             <a href="{% url 'musicApp:music-oneMusicHome' music.id %}" target='_blank' style="color: rgba(34, 81,231, 0.69);font-size: 13px; margin-left: 25px">试听</a> 
-                                            <a href="{% url 'musicApp:music-unlove' music.id %}"><div class="unlove-icon"></div></a>
+                                            <a href="{% url 'musicApp:music-unlove' music.id %}" data-toggle="tooltip" title="不给红心了">
+                                                <div class="unlove-icon" ></div>
+                                            </a>
                                         </ul>                 
                                     </div>  
                                 </li>
@@ -212,7 +214,7 @@
                                             <div class="userhome-music-li">专辑 {{music.musicAlbumtitle}}</div>
                                             <div class="userhome-music-li">发行时间 {{music.musicPubTime}}</div>
                                             <a href="{% url 'musicApp:music-oneMusicHome' music.id %}" target='_blank' style="color: rgba(34, 81,231, 0.69);font-size: 13px; margin-left: 25px">试听</a> 
-                                            <a href="{% url 'musicApp:music-love' music.id %}"><div class="love-icon"></div></a>
+                                            <a href="{% url 'musicApp:music-love' music.id %}" data-toggle="tooltip" title="喜欢这首歌"><div class="love-icon"></div></a>
                                         </ul>                 
                                     </div>  
                                 </li>
