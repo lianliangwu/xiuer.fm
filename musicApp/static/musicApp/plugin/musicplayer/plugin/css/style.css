@@ -2,7 +2,7 @@
 
 .ttw-music-player {
     width: 370px;
-    position: fixed;
+    position: relative;
     margin-right: 50px;
     margin-left: 600px;
     float: inherit;

@@ -27,4 +27,5 @@ urlpatterns = patterns('',
 	# views_channel.py
 	url(r'^lovechannel/$',views.lovechannel_view, name = 'music-lovechannel'),
 	url(r'^randomchannel/$',views.randomchannel_view, name = 'music-randomchannel'),
+	url(r'^guanbojuchannel/$',views.guanbojuchannel_view, name = 'music-guanbojuchannel'),
 	)

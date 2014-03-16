@@ -52,3 +52,22 @@ def randomchannel_view(request):
 		return render(request,'musicApp/music_home.html',{
 			'myPlaylist2': myPlaylist, 
 		})
+
+# guangboju channel
+def guanbojuchannel_view(request):
+	user_id = request.user.id
+	if user_id is not None:
+		# 2: 广播剧类型
+		musicList = list(Music.objects.filter(musicType = '2'))
+		myPlaylist = format(musicList)
+		return render(request,'musicApp/user_music_home.html',{
+			'myPlaylist2': myPlaylist, 
+		})
+	else :
+		musicList = list(Music.objects.order_by('?')[0:12])
+		myPlaylist = format(musicList)
+		return render(request,'musicApp/music_home.html',{
+			'myPlaylist2': myPlaylist, 
+			'error_message':'对不起，广播剧是妞妞听的'
+		})
+
