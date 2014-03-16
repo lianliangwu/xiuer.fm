@@ -221,12 +221,11 @@
                     <h2><a href="#" target=""></a></h2>
                     <section id="">
                         <section id="">
-                            <br />
                             <h3 style="margin-left: 39px;color: gray;">广播剧.MHz</h3>
-                            <p style="margin-left: 39px;color: gray;">在偶遇的音乐世界里，慢慢寻找属于你的那首歌</p>
+                            <p style="margin-left: 39px;color: gray;">妞妞喜欢的广播剧，听着就像是一场戏</p>
                             <ul>
-                            {% if UserMusicList_C2 %}
-                                {% for music in UserMusicList_C2%}
+                            {% if UserMusicList_C0 %}
+                                {% for music in UserMusicList_C0%}
                                 <li style="height:130px">
                                     <div class="cover-wrap" style="width: 125px;height: 125px;">                         
                                         <img class="img-thumbnail" src="{{ music.musicPicUrl }}">             
@@ -254,12 +253,11 @@
                     <h2><a href="#" target=""></a></h2>
                     <section id="">
                         <section id="">
-                            <br />
-                            <h3 style="margin-left: 39px;color: gray;">喜欢的广播据.MHz</h3>
+                            <h3 style="margin-left: 39px;color: gray;">喜欢的广播剧.MHz</h3>
                             <p style="margin-left: 39px;color: gray;">在偶遇的音乐世界里，慢慢寻找属于你的那首歌</p>
                             <ul>
-                            {% if UserMusicList_C3 %}
-                                {% for music in UserMusicList_C3%}
+                            {% if UserMusicList_C0 %}
+                                {% for music in UserMusicList_C0%}
                                 <li style="height:130px">
                                     <div class="cover-wrap" style="width: 125px;height: 125px;">                         
                                         <img class="img-thumbnail" src="{{ music.musicPicUrl }}">             
@@ -271,9 +269,7 @@
                                             <div class="userhome-music-li">专辑 {{music.musicAlbumtitle}}</div>
                                             <div class="userhome-music-li">发行时间 {{music.musicPubTime}}</div>
                                             <a href="{% url 'musicApp:music-oneMusicHome' music.id %}" target='_blank' style="color: rgba(34, 81,231, 0.69);font-size: 13px; margin-left: 25px">试听</a> 
-                                            <a href="{% url 'musicApp:music-unlove' music.id %}" data-toggle="tooltip" title="不给红心了">
-                                                <div class="unlove-icon" ></div>
-                                            </a>
+                                            <a href="{% url 'musicApp:music-love' music.id %}" data-toggle="tooltip" title="喜欢这首歌"><div class="love-icon"></div></a>
                                         </ul>                 
                                     </div>  
                                 </li>

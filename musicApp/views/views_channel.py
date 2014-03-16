@@ -71,3 +71,27 @@ def guanbojuchannel_view(request):
 			'error_message':'对不起，广播剧是妞妞听的'
 		})
 
+# love guangboju channel
+def love_guanbojuchannel_view(request):
+	user_id = request.user.id
+	if user_id is not None:
+		lovechannel_list = []
+		loves = UserLoveMusic.objects.filter(userId = user_id)
+		for love in loves:
+			try:
+				music = Music.objects.get(id = int(love.musicId),musicType = '2')
+				lovechannel_list.append(music)
+			except(Music.DoesNotExist):
+				pass
+		myPlaylist = format(lovechannel_list)
+		return render(request,'musicApp/user_music_home.html',{
+			'myPlaylist2': myPlaylist, 
+		})
+	else :
+		musicList = list(Music.objects.order_by('?')[0:12])
+		myPlaylist = format(musicList)
+		return render(request,'musicApp/music_home.html',{
+			'myPlaylist2': myPlaylist, 
+			'error_message':'对不起，广播剧是妞妞听的'
+		})
+
