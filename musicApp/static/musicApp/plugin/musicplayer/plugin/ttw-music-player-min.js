@@ -20,6 +20,7 @@
             jPlayerInterface: '.jp-interface',
             playerPrevious: ".jp-interface .jp-previous",
             playerNext: ".jp-interface .jp-next",
+            markLove: ".jp-love",
             trackList:'.tracklist',
             tracks:'.tracks',
             track:'.track',
@@ -140,6 +141,13 @@
                         return false;
                     });
 
+                    // mark love music
+                    $(cssSelector.markLove).click(function() {
+                        markLoveMusic();
+                        $(this).blur();
+                        return false;
+                    });
+
                     $self.bind('mbInitPlaylistAdvance', function(e) {
                         var changeTo = this.getData('mbInitPlaylistAdvance');
 
@@ -198,6 +206,22 @@
             function playlistNext() {
                 var index = (current + 1 < myPlaylist.length) ? current + 1 : 0;
                 playlistAdvance(index);
+            }
+
+            // mark love music
+            function markLoveMusic() {
+                // document.getElementById("current").value = current;
+                // alert(myPlaylist[current].id)
+                $.ajax({
+                    url: "../../musicApp/love/"+myPlaylist[current].id,
+                    type:"get",
+                    success: function(response){
+                    //Do Something
+                    },
+                    error: function(xhr) {
+                    //Do Something to handle error
+                    }
+                });
             }
 
             function playlistPrev() {
@@ -400,9 +424,11 @@
                         '        <div class="player-controls">' +
                         '            <div class="main">' +
                         // '                <div class="previous jp-previous"></div>' +
-                        '                <div class="play jp-play"></div>' +
-                        '                <div class="pause jp-pause"></div>' +
-                        '                <div class="next jp-next"></div>' +
+                        '                <div class="play jp-play" data-toggle="tooltip" title="接着听喽"></div>' +
+                        '                <div class="pause jp-pause" data-toggle="tooltip" title="停一下下"></div>' +
+                        '                <div class="jp-love" data-toggle="tooltip" title="妞妞喜欢这首歌"></div>' +
+                        '                <a href="../musichome/"><div class="list" data-toggle="tooltip" title="亮亮，换一列歌吧"></div></a>' +
+                        '                <div class="next jp-next" data-toggle="tooltip" title="妞妞要听下一首"></div>' +
                         '<!-- These controls aren\'t used by this plugin, but jPlayer seems to require that they exist -->' +
                         '                <span class="unused-controls">' +
                         '                    <span class="jp-video-play"></span>' +

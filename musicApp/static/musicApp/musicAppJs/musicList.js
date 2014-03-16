@@ -76,8 +76,8 @@ $(document).ready(function(){
     });
 
     /*show error_message modal*/
-    var error_message = document.getElementById("error_message_input").value;
-    if(error_message != null && error_message.length !=0){
+    var error_message = document.getElementById("error_message_input");
+    if(error_message != null && error_message.value.length !=0){
         $('.error-modal').modal();
     }
 });

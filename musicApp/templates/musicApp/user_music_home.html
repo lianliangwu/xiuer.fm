@@ -22,7 +22,6 @@
     <script src="{% static 'musicApp/common/dist/js/bootstrap.min.js' %}"></script>
     <!-- END:Add bootstrap lib -->
 
-    <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/demo/js/jquery-1.6.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/plugin/jquery-jplayer/jquery.jplayer.js' %}"></script>
 
     <script type="text/javascript" src="{% static 'musicApp/plugin/musicplayer/plugin/ttw-music-player-min.js' %}"></script>
@@ -42,29 +41,29 @@
     <div id='content'>
         <input type='hidden' id='myPlaylist_input' value='{{myPlaylist2}}'/>
     </div>
-        <!-- channel panel -->
+    <!-- channel panel -->
     <!-- affix-nav -->
     <div id="channel panel" class="bs-docs-sidebar col-md-4 col-sm-4 hidden-xs">
         <ul class="nav sidenav" style="top: 80px;margin-left: 200px;position: fixed;width: 300px;">
             <!-- Moon MHZ -->
             <li><a href="#"><div class='userhome-font'>月亮 MHz</div></a></li>
             <li>
-                <a href="#love_channel" style="color=rgba(138, 148, 156, 0.91)">
+                <a href="{% url 'musicApp:music-lovechannel'%}"  style="color=rgba(138, 148, 156, 0.91)">
                     <div class="cover-wrap">                
                         <img class="cover img-circle" src="http://img3.douban.com/img/fmadmin/icon/27675.jpg">      
                     </div>             
                     <div>                 
-                        <div class="slide-lable">红心MHz</div>              
+                        <div class="slide-lable" data-toggle="tooltip" title="这是妞妞收藏的红心歌曲哦">红心MHz</div>              
                     </div>  
                 </a>                   
             </li>
             <li>
-                <a href="#random_channel" style="color=rgba(138, 148, 156, 0.91)">
+                <a href="{% url 'musicApp:music-randomchannel'%}" style="color=rgba(138, 148, 156, 0.91)">
                     <div class="cover-wrap">                              
                         <img class="cover img-circle" src="http://img3.douban.com/img/fmadmin/icon/26375.jpg">
                     </div>             
                     <div>                 
-                        <div class="slide-lable">随心MHz</div>          
+                        <div class="slide-lable" data-toggle="tooltip" title="要不来些偶遇的歌曲吧">随心MHz</div>          
                     </div>  
                 </a>                   
             </li>
@@ -77,17 +76,7 @@
                         <img class="cover img-circle" src="http://img3.douban.com/img/fmadmin/icon/26383.jpg">
                     </div>             
                     <div>                 
-                        <div class="slide-lable">随心MHz</div>          
-                    </div>  
-                </a>                   
-            </li>
-            <li>
-                <a href="#" style="color=rgba(138, 148, 156, 0.91)">
-                    <div class="cover-wrap">                
-                        <img class="cover img-circle" src="http://img3.douban.com/img/fmadmin/icon/26373.jpg">      
-                    </div>             
-                    <div>                 
-                        <div class="slide-lable">红心MHz</div>              
+                        <div class="slide-lable" data-toggle="tooltip" title="^_^，广播剧频道还在开发中，妞妞再稍稍等会哈  ">广播剧MHz</div>        
                     </div>  
                 </a>                   
             </li>
@@ -96,21 +85,11 @@
             </li>
             <li>
                 <a href="#" style="color=rgba(138, 148, 156, 0.91)">
-                    <div class="cover-wrap">                              
-                        <img class="cover img-circle" src="http://img3.douban.com/img/fmadmin/icon/21222.jpg">
-                    </div>             
-                    <div>                 
-                        <div class="slide-lable">随心MHz</div>          
-                    </div>  
-                </a>                   
-            </li>
-            <li>
-                <a href="#" style="color=rgba(138, 148, 156, 0.91)">
                     <div class="cover-wrap">                
                         <img class="cover img-circle" src="http://img3.douban.com/img/fmadmin/icon/19041.jpg">      
                     </div>             
                     <div>                 
-                        <div class="slide-lable">红心MHz</div>              
+                        <div class="slide-lable" data-toggle="tooltip" title="献给我最爱的秀儿同学(开发中，妞妞别急哦，(*^__^*) 嘻嘻……)">爱你MHz</div>              
                     </div>  
                 </a>                   
             </li>

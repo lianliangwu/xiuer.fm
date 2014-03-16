@@ -154,6 +154,10 @@
 }
 
 .ttw-music-player .next {
+    height: 45px;
+    width: 45px;
+    margin-top: -45px;
+    margin-left: 160px;
     background: transparent url(../images/sprite.png) no-repeat ;
     opacity: 0.6; 
     filter: alpha(opacity=60); 
@@ -162,6 +166,48 @@
     background: transparent url(../images/sprite.png) no-repeat ;
     opacity: 1; 
     filter: alpha(opacity=100); 
+}
+
+/*add new list button*/
+.ttw-music-player .list {
+    height: 45px;
+    width: 45px;
+    margin-top: -30px;
+    margin-left: 90px;
+    background: transparent url(../images/sprite.png) no-repeat -50px -50px;
+    opacity: 0.6; 
+    filter: alpha(opacity=60); 
+}
+
+.ttw-music-player .list:hover {
+    height: 45px;
+    width: 45px;
+    margin-top: -30px;
+    margin-left: 90px;
+    background: transparent url(../images/sprite.png) no-repeat -50px -50px;
+    opacity: 1; 
+    filter: alpha(opacity=60); 
+}
+
+/*add love button*/
+.ttw-music-player .jp-love {
+    width: 16px;
+    height: 16px;
+    margin-top: -10px;
+    margin-left: 40px;
+    background: transparent url(../images/love_icon.png) no-repeat  -14px -63px;
+    /*opacity: 0.6; */
+    filter: alpha(opacity=60); 
+}
+
+.ttw-music-player .jp-love:hover {
+    width: 16px;
+    height: 16px;
+    margin-top: -10px;
+    margin-left: 40px;
+    background: transparent url(../images/love_icon.png) no-repeat -14px -91px;
+    /*opacity: 1; */
+    filter: alpha(opacity=60); 
 }
 
 .ttw-music-player .play {
