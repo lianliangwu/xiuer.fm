@@ -1,5 +1,6 @@
 from musicApp.models import Music
 from musicApp.models import UserLoveMusic
+from musicApp.models import Pair
 
 from django.shortcuts import render
 
@@ -20,11 +21,18 @@ def format(musicList):
 def lovechannel_view(request):
 	user_id = request.user.id
 	if user_id is not None:
+		# one user id belong to only one pair
+		try:
+			pair = Pair.objects.get(boyId = user_id)
+		except(Pair.DoesNotExist):
+			pair = Pair.objects.get(girlId = user_id)
 		lovechannel_list = []
-		loves = UserLoveMusic.objects.filter(userId = user_id)
+		loves = UserLoveMusic.objects.filter(pairId = pair.id)
 		for love in loves:
 			music = Music.objects.get(id = int(love.musicId))
-			lovechannel_list.append(music)
+			if music.musicType != '2':
+				# exclude the guangboju type-2
+				lovechannel_list.append(music)
 		myPlaylist = format(lovechannel_list)
 		return render(request,'musicApp/user_music_home.html',{
 			'myPlaylist2': myPlaylist, 
@@ -76,7 +84,11 @@ def love_guanbojuchannel_view(request):
 	user_id = request.user.id
 	if user_id is not None:
 		lovechannel_list = []
-		loves = UserLoveMusic.objects.filter(userId = user_id)
+		try:
+			pair = Pair.objects.get(boyId = user_id)
+		except(Pair.DoesNotExist):
+			pair = Pair.objects.get(girlId = user_id)
+		loves = UserLoveMusic.objects.filter(pairId = pair.id)
 		for love in loves:
 			try:
 				music = Music.objects.get(id = int(love.musicId),musicType = '2')

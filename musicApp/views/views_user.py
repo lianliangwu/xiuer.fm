@@ -20,6 +20,7 @@ import urllib.request
 
 from musicApp.models import Music
 from musicApp.models import UserLoveMusic
+from musicApp.models import Pair
 
 # @list the music list
 class IndexView(generic.ListView):
@@ -48,7 +49,11 @@ def love(request,music_id):
 		try:
 			love = UserLoveMusic.objects.get(userId = user_id,musicId = int(music_id))
 		except(UserLoveMusic.DoesNotExist):
-			love2 = UserLoveMusic(userId = user_id,musicId = int(music_id))
+			try:
+				pair = Pair.objects.get(boyId = user_id)
+			except(Pair.DoesNotExist):
+				pair = Pair.objects.get(girlId = user_Id)
+			love2 = UserLoveMusic(userId = user_id,musicId = int(music_id),pairId = pair.id)
 			love2.save()
 		return HttpResponseRedirect(reverse('musicApp:music-userHome',args=(user_id,)))
 	else :
@@ -125,6 +130,7 @@ def musicHome(request):
 			'user':user,
 			'myPlaylist2': myPlaylist, 
 		})
+		return response
 	else :
 		myPlaylist = getMyPlayList()
 		return render(request,'musicApp/music_home.html',{
@@ -215,24 +221,31 @@ def admin(request):
 			albumtitle = song['albumtitle']
 
 			try:
-				music = Music(musicPicUrl = picture,musicArtist = artist,musicUrl = url,musicName = title,musicLike = like,
-					musicPubTime = public_time,musicAlbumtitle = albumtitle)
-				# save the text information
-				music.save()
+				existMusic = Music.objects.filter(musicName = title,musicArtist = artist,musicPubTime = public_time,musicAlbumtitle = albumtitle)
+				if existMusic is None:
+					try:
+						music = Music(musicPicUrl = picture,musicArtist = artist,musicUrl = url,musicName = title,musicLike = like,
+							musicPubTime = public_time,musicAlbumtitle = albumtitle)
+						# save the text information
+						music.save()
 
-				# 下载专辑
-				songMp3 = 'music/' + title
-				if not os.path.exists(songMp3):
-				    subprocess.call([
-				    	'wget','-r',
-				    	'-A','.mp3',
-				    	url
-				    	])
-			except (KeyError,Music.DoesNotExist):
-				return render(request,'musicApp/detail.html',{
-					'music':music,
-					'error_message':'download error.',
-					})
+						# 下载专辑
+						songMp3 = 'music/' + title
+						if not os.path.exists(songMp3):
+						    subprocess.call([
+						    	'wget','-r',
+						    	'-A','.mp3',
+						    	url
+						    	])
+					except (KeyError,Music.DoesNotExist):
+						return render(request,'musicApp/detail.html',{
+							'music':music,
+							'error_message':'download error.',
+							})
+				else:
+					pass
+			except(Music.DoesNotExist):
+				pass
 		
 	return HttpResponseRedirect(reverse('musicApp:music-list'))
 
@@ -240,15 +253,43 @@ def admin(request):
 def register(request):
 	if request.method == 'POST':
 		username = request.POST['username']
-		email = request.POST['email']
+		# email = request.POST['email']
 		password = request.POST['password']
-		user = User.objects.create_user(username, email, password)
-		user.save()
-	myPlaylist = getMyPlayList()
-	return render(request,'musicApp/user_music_home.html',{
-		'user':user,
-		'myPlaylist2': myPlaylist, 
-		})
+		username2 = request.POST['username2']
+		pairname = request.POST['pairname']
+		myPlaylist = getMyPlayList()
+		try:
+			# my account
+			Existuser = User.objects.get(username = username2)
+			if Existuser is not None:
+				return render(request,'musicApp/music_home.html',{
+					'myPlaylist2': myPlaylist, 
+					'error_message':'用户名'+username2+'已被占用，请重新注册.',
+					})
+
+		except(User.DoesNotExist):
+			try:
+				# Ta account
+				Existuser2 = User.objects.get(username = username)
+				if Existuser2 is not None:
+					return render(request,'musicApp/music_home.html',{
+						'myPlaylist2': myPlaylist, 
+						'error_message':'用户名'+username+'已被占用，请重新注册.',
+						})
+			except(User.DoesNotExist):
+				user = User.objects.create_user(username,password)
+				user.save()
+				# missing validate
+				user2 = User.objects.create_user(username2,password)
+				user2.save()
+				# new pair
+				pair = Pair(boyId = user.id,girlId = user2.id,pairName = pairname)
+				pair.save()
+				return render(request,'musicApp/user_music_home.html',{
+					'user':user2,
+					'myPlaylist2': myPlaylist, 
+					})
+
 # login
 def login_view(request):
 	# POST Method
@@ -262,21 +303,30 @@ def login_view(request):
 def post_login(request):
 	username = request.POST['username']
 	password = request.POST['password']
-	user = authenticate(username="zhaochengxiu", password="zhaochengxiu")
+	user = authenticate(username=username, password=password)
 	if user is not None:
 		if user.is_active:
-			# push user to session
-			login(request, user)
-			# Redirect to a success page.
-			myPlaylist = getMyPlayList()
-			response = render(request,'musicApp/user_music_home.html',{
-				'user':user,
-				'myPlaylist2': myPlaylist, 
-			})
-			# push user to cookie
-			response.set_cookie('xiuerFM_username', username)
-			response.set_cookie('xiuerFM_password', password)
-			return response
+			if user.is_staff:
+				# staff user allow login
+				# push user to session
+				login(request, user)
+				# Redirect to a success page.
+				myPlaylist = getMyPlayList()
+				response = render(request,'musicApp/user_music_home.html',{
+					'user':user,
+					'myPlaylist2': myPlaylist, 
+				})
+				# push user to cookie
+				response.set_cookie('xiuerFM_username', username)
+				response.set_cookie('xiuerFM_password', password)
+				return response
+			else:
+				# Return an 'invalid login' error message.
+				myPlaylist = getMyPlayList()
+				return render(request,'musicApp/music_home.html',{
+						'myPlaylist2': myPlaylist, 
+						'error_message':'该系统仅允许秀儿登录'
+					})
 	else:
 		# Return an 'invalid login' error message.
 		myPlaylist = getMyPlayList()

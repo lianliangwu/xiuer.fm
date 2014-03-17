@@ -30,7 +30,10 @@
     <div id="logo-div">
         <div id="logo"> </div>
         <div id="login-div"> 
-            <a href="{% url 'musicApp:music-userHome' user.id %}" target='_blank' style="text-decoration: none;">{{user.username}} 音乐家园 &nbsp</a>
+            <!-- <a href="{% url 'musicApp:music-userHome' user.id %}" target='_blank' style="text-decoration: none;">{{user.username}} 秀儿家园 &nbsp</a> -->            
+            <a href="{% url 'musicApp:music-userHome' user.id %}" target='_blank' style="text-decoration: none;"><!-- {{user.username}} --> 秀儿家园 &nbsp</a>
+            <a href="http://lovexiuer.diandian.com/" target='_blank' style="text-decoration: none;"> 一言一语 &nbsp</a>
+            <a href="{% url 'musicApp:music-post' user.id %}" target='_blank' style="text-decoration: none;"> 测试版页 &nbsp</a>
             <a href="{% url 'musicApp:music-logout' %}" style="text-decoration: none;">登出</a>
         </div>
     </div>

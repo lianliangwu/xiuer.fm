@@ -27,3 +27,18 @@ class Music(models.Model):
 class UserLoveMusic(models.Model):
 	userId = models.IntegerField()
 	musicId = models.IntegerField()
+	pairId = models.IntegerField()
+
+# model:post
+class Post(models.Model):
+	title = models.CharField(max_length = 200)
+	description = models.CharField(max_length = 2000)
+	pubDate = models.CharField(max_length = 200)
+	postType =  models.CharField(max_length = 1)
+
+
+# model:pair
+class Pair(models.Model):
+	boyId = models.IntegerField(max_length = 100)
+	girlId = models.IntegerField(max_length = 100)
+	pairName = models.CharField(max_length = 200)

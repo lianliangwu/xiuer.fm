@@ -29,4 +29,7 @@ urlpatterns = patterns('',
 	url(r'^randomchannel/$',views.randomchannel_view, name = 'music-randomchannel'),
 	url(r'^guanbojuchannel/$',views.guanbojuchannel_view, name = 'music-guanbojuchannel'),
 	url(r'^loveguanbojuchannel/$',views.love_guanbojuchannel_view, name = 'music-loveguanbojuchannel'),
+
+	# views_post.py
+	url(r'^post/(?P<user_id>\d+)/$',views.post_view, name = 'music-post'),
 	)
