@@ -191,7 +191,11 @@ def admin(request):
 	
 	while True:
 		# get the online music play list
-		url = 'http://douban.fm/j/mine/playlist?type=n&channel=0'
+		# Light music:9
+		# 华语:1 - xiu.FM:101
+		# 八零:4 - xiu.FM:104
+		channel_id = '4'
+		url = 'http://douban.fm/j/mine/playlist?type=n&channel='+channel_id
 		#此时添加header，模拟浏览器访问，否则会报错：HTTPError: HTTP Error 403: Forbidden
 		headers = {
 		'User-Agent': 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.114 Safari/537.36',
@@ -219,12 +223,15 @@ def admin(request):
 			public_time = song['public_time']
 			# albumtitle
 			albumtitle = song['albumtitle']
-
+			existMusic = None
 			try:
-				existMusic = Music.objects.filter(musicName = title,musicArtist = artist,musicPubTime = public_time,musicAlbumtitle = albumtitle)
+				existMusic = Music.objects.get(musicName = title,musicArtist = artist,musicPubTime = public_time,musicAlbumtitle = albumtitle)
+			except(Music.DoesNotExist,Music.MultipleObjectsReturned):
+				# Not exist in data base 
 				if existMusic is None:
 					try:
-						music = Music(musicPicUrl = picture,musicArtist = artist,musicUrl = url,musicName = title,musicLike = like,
+						# musicType: xiuer.FM type
+						music = Music(musicType=channel_id+100,musicPicUrl = picture,musicArtist = artist,musicUrl = url,musicName = title,musicLike = like,
 							musicPubTime = public_time,musicAlbumtitle = albumtitle)
 						# save the text information
 						music.save()
@@ -237,16 +244,11 @@ def admin(request):
 						    	'-A','.mp3',
 						    	url
 						    	])
-					except (KeyError,Music.DoesNotExist):
+					except (KeyError):
 						return render(request,'musicApp/detail.html',{
 							'music':music,
 							'error_message':'download error.',
 							})
-				else:
-					pass
-			except(Music.DoesNotExist):
-				pass
-		
 	return HttpResponseRedirect(reverse('musicApp:music-list'))
 
 # register

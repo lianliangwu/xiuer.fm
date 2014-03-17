@@ -14,7 +14,7 @@ class Music(models.Model):
 	mp3 = models.CharField(max_length = 200)
 	cover = models.CharField(max_length = 200)
 	musicDescribe= models.CharField(max_length =200)
-	musicType= models.CharField(max_length =1)
+	musicType= models.CharField(max_length =20)
 
 	musicPicUrl = models.CharField(max_length = 200)
 	musicArtist = models.CharField(max_length = 200)
