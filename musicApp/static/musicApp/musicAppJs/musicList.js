@@ -71,7 +71,7 @@ $(document).ready(function(){
         autoplay:true, 
         description:description,
         jPlayer:{
-            swfPath:'musicApp/plugin/musicplayer/plugin/jquery-jplayer' 
+            swfPath:"http://www.jplayer.org/latest/js/Jplayer.swf"
         }
     });
 

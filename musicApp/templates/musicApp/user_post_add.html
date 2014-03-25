@@ -1,0 +1,105 @@
+
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>xiuer.FM</title>
+    <link rel="stylesheet" href="{% static 'musicApp/css/musicApp_post.css'%}">
+</head>
+
+<body class="view-post">
+    <div class="container">
+        <div class="header clearfix">
+            <a href="http://lovexiuer.diandian.com" class="avatar">
+                <img src="http://m3.img.papaapp.com/farm5/d/2013/1007/20/386C7391BBB384BE0EA3CE967B58F322_S64_64_64.JPEG" />
+                <!-- <img class="img-circle" src="{% static 'musicApp/images/logo.png' %}"> -->
+            </a>
+            <div class="info clearfix">
+                <div class="card">
+                    <h1 class="title"><a href="http://lovexiuer.diandian.com">蓝蓝天</a></h1>
+                    <div class="bio">K121 开往幸福的列车</div>
+                </div>
+            </div>
+        </div>
+        <form action="/musicApp/post/add/" method="POST">
+            {% csrf_token %}
+            <div class="main box-wrapper clearfix"> 
+                <div class="sidebar">
+                    <div class="detail">武昌</div>
+                </div>
+                <div class="sidebar">
+                    <div class="detail">
+                        <div>鄂州</div>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <div class="detail">
+                        <div>阳新</div>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <div class="detail">
+                        <div>南昌</div>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <div class="detail">
+                        <div>鹰潭</div>
+                    </div>
+                </div>
+                <div class="sidebar">
+                    <div class="detail">
+                        <div>金华西</div>
+                    </div>
+                </div>   
+                <div class="sidebar">
+                    <div class="detail">
+                        <div>义乌</div>
+                    </div>
+                </div> 
+                <div class="sidebar">
+                    <div class="detail">
+                        <div>杭州东</div>
+                    </div>
+                </div> 
+                <div class="sidebar">
+                    <div class="detail">
+                        <div>海宁</div>
+                    </div>
+                </div> 
+                <div class="sidebar">
+                    <div class="detail">
+                        <div>嘉兴</div>
+                    </div>
+                </div>     
+                <div class="sidebar">
+                    <div class="detail">
+                        <div>上海南</div>
+                    </div>
+                </div>         
+                <div class="content">
+                    <div class="pb-post-area">
+                        <div class="pb-post-section">
+                            <h3 class="pb-section-title">标题</h3>
+                            <input type="text" class="pb-input-text" name="title">
+                        </div>
+                        <div class="pb-post-section">
+                            <h3 class="pb-section-title">内容</h3>
+                            <textarea class="pb-input-text" name="description"></textarea>
+                        </div>
+                        </div>
+                        <button type="submit" class="btn"> 发布 </button>
+                </div>
+            </div>
+        </form>
+        <div class="footer box-wrapper">
+            <div class="content"> &copy; 
+                <a href="http://lovexiuer.diandian.com">蓝蓝天</a>, Powered by 
+                <a href="http://www.diandian.com" target="_blank">xiuer.FM</a>, 
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

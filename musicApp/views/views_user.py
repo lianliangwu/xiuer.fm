@@ -52,7 +52,7 @@ def love(request,music_id):
 			try:
 				pair = Pair.objects.get(boyId = user_id)
 			except(Pair.DoesNotExist):
-				pair = Pair.objects.get(girlId = user_Id)
+				pair = Pair.objects.get(girlId = user_id)
 			love2 = UserLoveMusic(userId = user_id,musicId = int(music_id),pairId = pair.id)
 			love2.save()
 		return HttpResponseRedirect(reverse('musicApp:music-userHome',args=(user_id,)))

@@ -32,4 +32,5 @@ urlpatterns = patterns('',
 
 	# views_post.py
 	url(r'^post/(?P<user_id>\d+)/$',views.post_view, name = 'music-post'),
+	url(r'^post/add/$',views.post_add_view, name = 'music-post-add'),
 	)

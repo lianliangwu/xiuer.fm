@@ -97,7 +97,7 @@
                 var jPlayerDefaults, jPlayerOptions;
 
                 jPlayerDefaults = {
-                    swfPath: "jquery-jplayer",
+                    swfPath: "http://www.jplayer.org/latest/js/Jplayer.swf",
                     supplied: "mp3, oga",
                     solution:'html, flash',
                     cssSelectorAncestor:  cssSelector.jPlayerInterface,

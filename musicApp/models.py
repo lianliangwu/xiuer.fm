@@ -42,3 +42,9 @@ class Pair(models.Model):
 	boyId = models.IntegerField(max_length = 100)
 	girlId = models.IntegerField(max_length = 100)
 	pairName = models.CharField(max_length = 200)
+
+# model:UserPost
+class  UserPost(models.Model):
+	"""user releation with Post"""
+	userId = models.IntegerField()
+	postId = models.IntegerField()
