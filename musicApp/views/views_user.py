@@ -187,7 +187,7 @@ def userHome(request,user_id):
 def admin(request):
 	# logging
 	logging.basicConfig(filename='musicAppLog.out',level=logging.DEBUG)
-	logging.debug("123")
+	# logging.debug("123")
 	
 	while True:
 		# get the online music play list
@@ -206,7 +206,7 @@ def admin(request):
 		# content2 = content.decode("UTF-8",'ignore').encode(type)
 		songs = json.loads(content.decode("utf-8"))['song']
 		# log in file
-		logging.debug(songs)
+		# logging.debug(songs)
 		# for songList in songs:
 		for song in songs:
 			# picture url
@@ -270,6 +270,8 @@ def register(request):
 					})
 
 		except(User.DoesNotExist):
+			user = User.objects.create_user(username2," ",password)
+			user.save()
 			try:
 				# Ta account
 				Existuser2 = User.objects.get(username = username)
@@ -279,18 +281,24 @@ def register(request):
 						'error_message':'用户名'+username+'已被占用，请重新注册.',
 						})
 			except(User.DoesNotExist):
-				user = User.objects.create_user(username," ",password)
-				user.save()
 				# missing validate
-				user2 = User.objects.create_user(username2," ",password)
+				user2 = User.objects.create_user(username," ",password)
 				user2.save()
 				# new pair
 				pair = Pair(boyId = user.id,girlId = user2.id,pairName = pairname)
 				pair.save()
-				return render(request,'musicApp/user_music_home.html',{
-					'user':user2,
+				# push user to session
+				user_temp = authenticate(username=username, password=password)
+				login(request, user_temp)
+
+				response = render(request,'musicApp/user_music_home.html',{
+					'user':user_temp,
 					'myPlaylist2': myPlaylist, 
 					})
+				# push user to cookieuser2.username
+				response.set_cookie('xiuerFM_username', user2.username)
+				response.set_cookie('xiuerFM_password', user2.password)
+				return response
 
 # login
 def login_view(request):
