@@ -12,6 +12,6 @@ Start
 
 Demo
 =========
-[a link](http://202.120.40.73:9698/musicApp/musichome/)
+[Demo site](http://202.120.40.73:9698/musicApp/musichome/)
 
 
