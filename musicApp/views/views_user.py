@@ -279,10 +279,10 @@ def register(request):
 						'error_message':'用户名'+username+'已被占用，请重新注册.',
 						})
 			except(User.DoesNotExist):
-				user = User.objects.create_user(username,password)
+				user = User.objects.create_user(username," ",password)
 				user.save()
 				# missing validate
-				user2 = User.objects.create_user(username2,password)
+				user2 = User.objects.create_user(username2," ",password)
 				user2.save()
 				# new pair
 				pair = Pair(boyId = user.id,girlId = user2.id,pairName = pairname)
@@ -308,7 +308,9 @@ def post_login(request):
 	user = authenticate(username=username, password=password)
 	if user is not None:
 		if user.is_active:
-			if user.is_staff:
+			# if user.is_staff:
+			# current donot check the staff permission
+			if 1:
 				# staff user allow login
 				# push user to session
 				login(request, user)

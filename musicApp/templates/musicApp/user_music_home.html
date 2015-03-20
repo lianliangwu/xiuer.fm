@@ -34,8 +34,8 @@
         <div id="login-div">
             <!-- <a href="{% url 'musicApp:music-userHome' user.id %}" target='_blank' style="text-decoration: none;">{{user.username}} 秀儿家园 &nbsp</a> -->            
             <a href="{% url 'musicApp:music-userHome' user.id %}" target='_blank' style="text-decoration: none;" data-toggle="tooltip" title="妞妞，来看看我们的歌吧，^_^"><!-- {{user.username}} --> 秀儿家园 &nbsp</a>
-            <a href="http://lovexiuer.diandian.com/" target='_blank' style="text-decoration: none;" data-toggle="tooltip" title="丫头，秘密花园里种着我们的一花一草哦"> 一花一草 &nbsp</a>
-            <a href="{% url 'musicApp:music-post' user.id %}" target='_blank' style="text-decoration: none;" data-toggle="tooltip" title="傻冒，别踩进来，这里还没装修好呢"> 测试版页 &nbsp</a>
+            <!-- <a href="http://lovexiuer.diandian.com/" target='_blank' style="text-decoration: none;" data-toggle="tooltip" title="丫头，秘密花园里种着我们的一花一草哦"> 一花一草 &nbsp</a>
+            <a href="{% url 'musicApp:music-post' user.id %}" target='_blank' style="text-decoration: none;" data-toggle="tooltip" title="傻冒，别踩进来，这里还没装修好呢"> 测试版页 &nbsp</a> -->
             <a href="{% url 'musicApp:music-logout' %}" style="text-decoration: none;">登出</a>
         </div>
     </div>

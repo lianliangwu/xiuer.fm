@@ -40,9 +40,9 @@ def lovechannel_view(request):
 	else :
 		musicList = list(Music.objects.order_by('?')[0:12])
 		myPlaylist = format(musicList)
-		return render(request,'musicApp/music_home.html',{
+		return render(request,'musicApp/user_music_home.html',{
 			'myPlaylist2': myPlaylist, 
-			'error_message':'请登录 xiuer.FM 查看红心MHz'
+			# 'error_message':'请登录 xiuer.FM 查看红心MHz'
 		})
 
 # random channel
@@ -57,7 +57,7 @@ def randomchannel_view(request):
 	else :
 		musicList = list(Music.objects.order_by('?')[0:8])
 		myPlaylist = format(musicList)
-		return render(request,'musicApp/music_home.html',{
+		return render(request,'musicApp/user_music_home.html',{
 			'myPlaylist2': myPlaylist, 
 		})
 
@@ -74,9 +74,9 @@ def guanbojuchannel_view(request):
 	else :
 		musicList = list(Music.objects.order_by('?')[0:12])
 		myPlaylist = format(musicList)
-		return render(request,'musicApp/music_home.html',{
+		return render(request,'musicApp/user_music_home.html',{
 			'myPlaylist2': myPlaylist, 
-			'error_message':'对不起，广播剧是妞妞听的'
+			# 'error_message':'对不起，广播剧是妞妞听的'
 		})
 
 # love guangboju channel
@@ -102,8 +102,8 @@ def love_guanbojuchannel_view(request):
 	else :
 		musicList = list(Music.objects.order_by('?')[0:12])
 		myPlaylist = format(musicList)
-		return render(request,'musicApp/music_home.html',{
+		return render(request,'musicApp/user_music_home.html',{
 			'myPlaylist2': myPlaylist, 
-			'error_message':'对不起，广播剧是妞妞听的'
+			#'error_message':'对不起，广播剧是妞妞听的'
 		})
 
